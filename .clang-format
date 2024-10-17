@@ -1,0 +1,16 @@
+# For auto-formatting C++ code, to make it more stylistically consistent
+Language: Cpp
+BasedOnStyle: Google
+UseTab: ForIndentation
+IndentWidth: 4
+TabWidth: 4
+MaxEmptyLinesToKeep: 1
+NamespaceIndentation: All
+ColumnLimit: 0
+PenaltyBreakAssignment: 2
+PenaltyReturnTypeOnItsOwnLine: 200
+PointerAlignment: Left
+SpaceBeforeParens: ControlStatements
+SortIncludes: false
+IndentAccessModifiers: false
+AccessModifierOffset: 0

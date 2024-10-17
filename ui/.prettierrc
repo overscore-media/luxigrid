@@ -1,0 +1,8 @@
+{
+  "printWidth": 1000,
+  "htmlWhitespaceSensitivity": "ignore",
+  "proseWrap": "never",
+  "trailingComma": "none",
+  "tabWidth": 2,
+  "useTabs": false
+}

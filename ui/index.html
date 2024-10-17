@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Luxigrid Control Panel</title>
+  </head>
+
+  <body>
+    <div id="app" class="bg-gradient-to-tr from-slate-700 to-slate-800 h-full min-h-screen relative text-white">
+      <svg class="w-full h-full absolute" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" class="stroke-slate-950/50" stroke-width="1" />
+          </pattern>
+        </defs>
+        <rect width="100%" height="100%" fill="url(#grid)" />
+      </svg>
+
+      <div id="loading-indicator" class="w-full h-full fixed bg-black/65 z-20 flex justify-center items-center hidden">
+        <div class="w-48 h-48">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24" class="animate-spin">
+            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2" />
+            <path stroke="#fff" stroke-linejoin="round" d="M13 6.5c3.134 0 4.5-1.318 4.5-4.5 0 3.182 1.357 4.5 4.5 4.5-3.143 0-4.5 1.357-4.5 4.5 0-3.143-1.366-4.5-4.5-4.5Z" />
+          </svg>
+        </div>
+      </div>
+
+      <div id="configuration" class="relative w-full h-full z-10">
+        <div class="text-5xl text-center pt-12">Luxigrid</div>
+
+        <div id="dashboard">
+          <div class="w-full text-center p-8 flex flex-col justify-center items-center text-md">
+            <div class="bg-blue-950 p-5 shadow-lg rounded-md flex flex-col gap-y-2">
+              <table class="table-auto w-full">
+                <tbody>
+                  <tr>
+                    <td class="px-4 py-2 text-left italic">IP Address</td>
+                    <td class="px-4 py-2 text-right"><strong id="dashboard-ip-address"></strong></td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-2 text-left italic">Current App</td>
+                    <td class="px-4 py-2 text-right"><strong id="current-app-name"></strong></td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-2 text-left italic">Firmware Version</td>
+                    <td class="px-4 py-2 text-right"><strong id="dashboard-firmware-version"></strong></td>
+                  </tr>
+                  <tr class="border-t">
+                    <td class="px-4 py-2 text-left italic">WiFi Network</td>
+                    <td class="px-4 py-2 text-right"><strong id="dashboard-wifi-ssid"></strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="w-full flex justify-center items-center">
+            <div class="w-full max-w-screen-md grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-8 md:gap-y-8 lg:gap-y-12 md:gap-x-8 lg:gap-x-12 px-3">
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="wifi-button" class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-10 h-10">
+                    <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m12 19.51.01-.011M2 8c6-4.5 14-4.5 20 0M5 12c4-3 10-3 14 0M8.5 15.5c2.25-1.4 4.75-1.4 7 0" />
+                    </svg>
+                  </div>
+                  <span class="text-xl">WiFi</span>
+                </button>
+              </div>
+
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="firmware-button" class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke="#fff" stroke-linecap="round" d="M14 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011M19.5 22v-6m0 0L17 18.5m2.5-2.5 2.5 2.5" />
+                    </svg>
+                  </div>
+                  <span class="text-xl">Upload Firmware</span>
+                </button>
+              </div>
+
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="file-button" class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M22 12.6v7.8a.6.6 0 0 1-.6.6h-7.8a.6.6 0 0 1-.6-.6v-7.8a.6.6 0 0 1 .6-.6h7.8a.6.6 0 0 1 .6.6ZM19.5 14.51l.01-.011" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m13 18.2 3.5-1.2 5.5 2M2 10V3.6a.6.6 0 0 1 .6-.6h6.178a.6.6 0 0 1 .39.144l3.164 2.712a.6.6 0 0 0 .39.144H21.4a.6.6 0 0 1 .6.6V9M2 10v8.4a.6.6 0 0 0 .6.6H10m-8-9h8" />
+                    </svg>
+                  </div>
+                  <span class="text-xl">File Browser</span>
+                </button>
+              </div>
+
+              <!-- App-specific config, if present, will go here -->
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="app-config-button" disabled class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors disabled:opacity-50 disabled:cursor-not-allowed">
+                  <div class="w-10 h-10" id="app-config-icon-wrapper"></div>
+                  <span class="text-xl" id="app-config-button-name"></span>
+                </button>
+              </div>
+
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="time-button" class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h6" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z" />
+                    </svg>
+                  </div>
+                  <span class="text-xl">Time and Date</span>
+                </button>
+              </div>
+
+              <div class="w-full h-full min-h-48 flex justify-center items-center">
+                <button id="advanced-button" class="w-full h-full max-w-screen-sm bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-10 h-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m19.622 10.395-1.097-2.65L20 6l-2-2-1.735 1.483-2.707-1.113L12.935 2h-1.954l-.632 2.401-2.645 1.115L6 4 4 6l1.453 1.789-1.08 2.657L2 11v2l2.401.655L5.516 16.3 4 18l2 2 1.791-1.46 2.606 1.072L11 22h2l.604-2.387 2.651-1.098C16.697 18.831 18 20 18 20l2-2-1.484-1.75 1.098-2.652 2.386-.62V11l-2.378-.605Z" />
+                    </svg>
+                  </div>
+                  <span class="text-xl">Advanced Settings</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- WiFi Settings -->
+        <form id="wifi-settings" class="hidden flex-col w-full">
+          <div class="w-full flex flex-col justify-center items-center text-left">
+            <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+              <div class="w-8 h-8">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+              </div>
+              <span class="mr-3">Return to Dashboard</span>
+            </button>
+
+            <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+              <div class="w-10 h-10">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m12 19.51.01-.011M2 8c6-4.5 14-4.5 20 0M5 12c4-3 10-3 14 0M8.5 15.5c2.25-1.4 4.75-1.4 7 0" />
+                </svg>
+              </div>
+              <span class="text-xl">WiFi Settings</span>
+            </div>
+
+            <div class="w-full max-w-screen-sm gap-y-4 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+              <label class="flex flex-col">
+                <span class="ml-2">WiFi Network Name (SSID)</span>
+                <input id="wifi-ssid" name="ssid" placeholder="SSID" class="bg-black/50 text-white m-2 p-2 rounded-md" maxlength="32" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">WiFi Password</span>
+                <div class="relative p-2">
+                  <input id="wifi-password" name="password" type="password" placeholder="Enter your network password" class="bg-black/50 text-white focus:bg-black/90 rounded-md w-full" maxlength="63" type="password" />
+                  <button id="toggle-wifi-password" type="button" class="absolute right-4 top-1/2 transform -translate-y-1/2 text-white focus:outline-none" title="Show WiFi password">
+                    <svg id="show-wifi-password-icon" class="hidden w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m19.5 16-2.475-3.396M12 17.5V14M4.5 16l2.469-3.388M3 8c3.6 8 14.4 8 18 0" />
+                    </svg>
+                    <svg id="hide-wifi-password-icon" class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="1.5">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M3 13c3.6-8 14.4-8 18 0" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 17a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
+                    </svg>
+                  </button>
+                </div>
+              </label>
+
+              <!-- Save Button -->
+              <div class="-ml-2">
+                <button class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Save Credentials</button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <!-- Upload New Firmware -->
+        <div id="firmware-settings" class="hidden flex-col w-full">
+          <div class="w-full flex flex-col justify-center items-center text-left">
+            <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+              <div class="w-8 h-8">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+              </div>
+              <span class="mr-3">Return to Dashboard</span>
+            </button>
+
+            <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+              <div class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke="#fff" stroke-linecap="round" d="M14 21H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v9" />
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M2 7h20M5 5.01l.01-.011M8 5.01l.01-.011M11 5.01l.01-.011M19.5 22v-6m0 0L17 18.5m2.5-2.5 2.5 2.5" />
+                </svg>
+              </div>
+              <span class="text-xl">Upload New Firmware</span>
+            </div>
+
+            <div class="w-full max-w-screen-sm gap-y-3 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+              <label class="flex flex-col">
+                <span class="ml-2 mb-2">New Firmware File</span>
+                <input id="upload-firmware-input" type="file" name="firmware" class="bg-black/30 p-4 rounded-md" accept=".bin" />
+              </label>
+
+              <!-- Upload Button -->
+              <div class="-ml-2">
+                <button id="upload-firmware-button" disabled class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Upload</button>
+              </div>
+
+              <!-- Firmware Upload Progress -->
+              <div class="p-2 hidden" id="firmware-upload-progress-wrapper">
+                <div class="flex justify-between mb-2">
+                  <span>Upload Progress</span>
+                  <div id="firmware-upload-percentage" class="">0%</div>
+                </div>
+                <progress id="firmware-upload-progress" class="w-full" value="0" max="100"></progress>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SD Card File Browser -->
+        <div id="file-settings" class="hidden flex-col w-full">
+          <div class="w-full flex flex-col justify-center items-center text-left">
+            <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+              <div class="w-8 h-8">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+              </div>
+              <span class="mr-3">Return to Dashboard</span>
+            </button>
+
+            <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+              <div class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M22 12.6v7.8a.6.6 0 0 1-.6.6h-7.8a.6.6 0 0 1-.6-.6v-7.8a.6.6 0 0 1 .6-.6h7.8a.6.6 0 0 1 .6.6ZM19.5 14.51l.01-.011" />
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m13 18.2 3.5-1.2 5.5 2M2 10V3.6a.6.6 0 0 1 .6-.6h6.178a.6.6 0 0 1 .39.144l3.164 2.712a.6.6 0 0 0 .39.144H21.4a.6.6 0 0 1 .6.6V9M2 10v8.4a.6.6 0 0 0 .6.6H10m-8-9h8" />
+                </svg>
+              </div>
+              <span class="text-xl">File Browser</span>
+            </div>
+
+            <div class="w-full max-w-screen-sm gap-y-3 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+              <p id="current-directory">Current Directory:</p>
+
+              <ul id="file-browser" class="flex flex-col overflow-x-auto rounded-md m-2 p-3 bg-black/20"></ul>
+
+              <div class="-ml-2">
+                <button id="back-to-root" class="flex px-3 py-2 mx-4 uppercase bg-blue-500/70 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">
+                  <div class="w-6 h-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m10.25 4.75-3.5 3.5 3.5 3.5" />
+                      <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M6.75 8.25h6a4 4 0 0 1 4 4v7" />
+                    </svg>
+                  </div>
+                  <span class="block">Return to Root Folder</span>
+                </button>
+              </div>
+
+              <hr class="my-6 border-blue-500/70" />
+
+              <label class="flex flex-col">
+                <span class="ml-2">Create New Folder</span>
+                <input aria-label="Enter a name for a new folder" id="create-new-folder-input" max-length="24" placeholder="New Folder Name" class="bg-black/50 text-white m-2 p-2 rounded-md" maxlength="32" />
+              </label>
+
+              <div class="-ml-2">
+                <button id="create-new-folder-button" disabled class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Create</button>
+              </div>
+
+              <hr class="my-6 border-blue-500/70" />
+
+              <label class="flex flex-col">
+                <span class="ml-2 mb-1">Upload File</span>
+                <input id="upload-to-sd-input" aria="Select a file to upload to the SD Card" type="file" class="bg-black/30 p-4 m-2 rounded-md" />
+              </label>
+
+              <div class="p-2 hidden" id="upload-progress-wrapper">
+                <div class="flex justify-between mb-2">
+                  <span>Upload Progress</span>
+                  <div id="upload-percentage" class="">0%</div>
+                </div>
+                <progress id="upload-progress" class="w-full" value="0" max="100"></progress>
+              </div>
+
+              <div class="-ml-2">
+                <button id="upload-to-sd-button" disabled class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors disabled:opacity-50 disabled:cursor-not-allowed">Upload</button>
+              </div>
+
+              <hr class="my-6 border-blue-500/70" />
+
+              <p>SD Card Info</p>
+
+              <p>
+                <strong>Total Size:</strong>
+                <span id="sd-total-size"></span>
+              </p>
+              <p>
+                <strong>Used Space:</strong>
+                <span id="sd-used-space"></span>
+              </p>
+              <p>
+                <strong>Free Space:</strong>
+                <span id="sd-free-space"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Time and Date Settings -->
+        <div id="time-settings" class="hidden flex-col w-full">
+          <div class="w-full flex flex-col justify-center items-center text-left">
+            <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+              <div class="w-8 h-8">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+              </div>
+              <span class="mr-3">Return to Dashboard</span>
+            </button>
+
+            <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+              <div class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h6" />
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10Z" />
+                </svg>
+              </div>
+              <span class="text-xl">Time and Date Settings</span>
+            </div>
+
+            <div class="w-full max-w-screen-sm gap-y-4 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+              <div class="w-full flex justify-center">
+                <button id="get-current-time" class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Get Current Date and Time</button>
+              </div>
+
+              <div class="flex flex-col md:flex-row w-full justify-center flex-grow">
+                <label class="flex flex-col text-center w-full">
+                  Hour
+                  <select id="hour-input" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md"></select>
+                </label>
+
+                <label class="flex flex-col text-center w-full">
+                  Minute
+                  <select id="minute-input" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md"></select>
+                </label>
+
+                <label class="flex flex-col text-center w-full">
+                  Second
+                  <select id="second-input" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md"></select>
+                </label>
+              </div>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Date</span>
+                <input type="date" id="date-input" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md" />
+              </label>
+
+              <!-- Save Button -->
+              <div class="-ml-2">
+                <button id="save-timestamp-button" class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Set Time and Date</button>
+              </div>
+
+              <hr class="my-6 border-blue-500/70" />
+
+              <label class="flex flex-col w-full">
+                <span class="ml-2">Timezone</span>
+                <div id="timezone-selector-wrapper" class="w-full m-2 pr-4"></div>
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Time Format</span>
+                <select name="timeformat" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md" id="time-format">
+                  <option value="12">12-Hour Time (Show AM/PM)</option>
+                  <option value="24">24-Hour Time</option>
+                </select>
+              </label>
+
+              <!-- Save Time Settings Button -->
+              <div class="-ml-2">
+                <button id="save-time-settings-button" class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Save Time and Date Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Advanced Settings -->
+        <div id="advanced-settings" class="hidden flex-col w-full">
+          <div class="w-full flex flex-col justify-center items-center text-left">
+            <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+              <div class="w-8 h-8">
+                <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+              </div>
+              <span class="mr-3">Return to Dashboard</span>
+            </button>
+
+            <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+              <div class="w-10 h-10">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z" />
+                  <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m19.622 10.395-1.097-2.65L20 6l-2-2-1.735 1.483-2.707-1.113L12.935 2h-1.954l-.632 2.401-2.645 1.115L6 4 4 6l1.453 1.789-1.08 2.657L2 11v2l2.401.655L5.516 16.3 4 18l2 2 1.791-1.46 2.606 1.072L11 22h2l.604-2.387 2.651-1.098C16.697 18.831 18 20 18 20l2-2-1.484-1.75 1.098-2.652 2.386-.62V11l-2.378-.605Z" />
+                </svg>
+              </div>
+              <span class="text-xl">Advanced Settings</span>
+            </div>
+
+            <div class="w-full max-w-screen-sm gap-y-6 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+              <label class="flex flex-col">
+                <span class="ml-2">Temperature Units</span>
+                <select name="temperature" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md max-w-xs" id="temperature-units">
+                  <option value="c">Celcius</option>
+                  <option value="f">Fahrenheit</option>
+                </select>
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Disable Light Sensor</span>
+                <input type="checkbox" class="p-4 m-2 rounded-md bg-black/50 focus:bg-black/90" id="disable-bh1750" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Manual Screen Brightness</span>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md max-w-xs" id="manual-brightness" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Light Sensor Lux Threshold</span>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md max-w-xs" id="lux-threshold" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Light Sensor Measurement Delay</span>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md max-w-xs" id="bh1750-delay" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Temperature/Humidity Sensor Measurement Delay</span>
+                <input type="text" inputmode="numeric" pattern="[0-9]*" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md max-w-xs" id="bme680-delay" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Custom NTP Server</span>
+                <input type="text" class="bg-black/50 text-white focus:bg-black/90 m-2 p-2 rounded-md max-w-xs" id="ntp-server" />
+              </label>
+
+              <label class="flex flex-col">
+                <span class="ml-2">Disable NTP</span>
+                <input type="checkbox" class="p-4 m-2 rounded-md bg-black/50 focus:bg-black/90" id="disable-ntp" />
+              </label>
+
+              <!-- Save Button -->
+              <div class="-ml-2">
+                <button id="save-advanced-settings-button" class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Save Advanced Settings</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="flex flex-col justify-center items-center flex-grow text-white text-center py-6" draggable="false">
+          <div class="p-8 w-full max-w-screen-sm xl:max-w-screen-md">
+            <p>
+              Proudly Designed by
+              <a href="https://overscore.media" target="_blank" class="text-white transition-colors duration-150 ease-linear hover:text-white/80 hover:no-underline">OverScore Media</a>
+            </p>
+          </div>
+        </footer>
+      </div>
+    </div>
+
+    <script type="module" src="/main.js"></script>
+  </body>
+</html>

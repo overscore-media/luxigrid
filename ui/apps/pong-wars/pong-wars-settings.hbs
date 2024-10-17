@@ -1,0 +1,36 @@
+<div class="w-full flex flex-col justify-center items-center text-left pb-12">
+  <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+    <div class="w-8 h-8">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+    </div>
+    <span class="mr-3">Return to Dashboard</span>
+  </button>
+
+  <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+    <div class="w-10 h-10">{{appIcon}}</div>
+    <span class="text-xl">Pong Wars Settings</span>
+  </div>
+
+  <div class="w-full max-w-screen-sm gap-y-4 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+    <!-- Colour 1 -->
+    <label class="flex flex-col text-center items-center" id="colour-1">
+        <span class="ml-2">Colour 1</span>
+        <input placeholder="Colour 1" type="color" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md p-1 h-20 w-28 block cursor-pointer">
+        <div><span class="hex-display"></span></div>
+    </label>
+
+    <!-- Colour 2 -->
+    <label class="flex flex-col text-center items-center" id="colour-2">
+        <span class="ml-2">Colour 2</span>
+        <input placeholder="Colour 2" type="color" class="bg-black/50 text-white focus:bg-black/90 m-2 rounded-md p-1 h-20 w-28 block cursor-pointer">
+        <div><span class="hex-display"></span></div>
+    </label>
+
+    <hr class="my-6 border-blue-500/70" />
+
+    <!-- Save Button -->
+    <div class="-ml-2">
+      <button class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Save Pong Wars Settings</button>
+    </div>
+  </div>
+</div>

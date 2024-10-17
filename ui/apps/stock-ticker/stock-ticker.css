@@ -1,0 +1,6 @@
+/* Stock Ticker Styles */
+.stock-wrapper {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1.5rem;
+  padding: 0.5rem;
+}

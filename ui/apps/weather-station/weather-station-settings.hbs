@@ -1,0 +1,67 @@
+<div class="w-full flex flex-col justify-center items-center text-left pb-12">
+  <button type="button" class="back-to-dashboard flex justify-center items-center px-2 py-1 mt-6 bg-blue-500/70 rounded-md">
+    <div class="w-8 h-8">
+      <svg class="w-full h-full" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m15 6-6 6 6 6" /></svg>
+    </div>
+    <span class="mr-3">Return to Dashboard</span>
+  </button>
+
+  <div class="w-full max-w-screen-sm bg-blue-900/70 flex flex-col gap-y-4 justify-center items-center text-center rounded-t-md shadow-md py-4 mt-8 select-none">
+    <div class="w-10 h-10">{{appIcon}}</div>
+    <span class="text-xl">Weather Station Settings</span>
+  </div>
+
+  <div class="w-full max-w-screen-sm gap-y-4 flex flex-col h-full bg-blue-950/70 rounded-md shadow-md p-3">
+
+    <p class="text-center py-2">Provide your Latitude and Longitude so Open-Meteo knows the location to provide you with weather data for. It does not have to be exact; the closest town/city should suffice.</p>
+    <p class="text-center py-2">It must be in a format like <strong>43.6426</strong> for latitude and <strong>-79.3871</strong> for longitude (location of the CN Tower in Toronto, as an example).</p>
+
+    <!-- Latitude -->
+    <label class="flex flex-col">
+      <span class="ml-2">Latitude</span>
+      <input id="latitude" placeholder="43.6426" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md" maxlength="40" />
+    </label>
+
+    <!-- Longitude -->
+    <label class="flex flex-col">
+      <span class="ml-2">Longitude</span>
+      <input id="longitude" placeholder="-79.3871" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md" maxlength="40" />
+    </label>
+
+    <p class="text-center py-2">You need to provide four digits of precision after the decimal point (although one or more of them could just be zeros, like <strong>43.0000</strong> and <strong>-79.0000</strong>). For Southern latitudes and Western longitudes, please use a negative sign.</p>
+
+    <hr />
+
+    <!-- Inside Only -->
+    <label class="flex flex-col">
+      <span class="ml-2">Inside Readings Only</span>
+      <input type="checkbox" class="p-4 m-2 rounded-md bg-black/50 focus:bg-black/90" id="inside-only" />
+    </label>
+
+    <p class="text-center py-2">This must be unchecked if you wish to receive live weather data from the internet (Open-Meteo.com). Otherwise, your Luxigrid's internal environmental sensor will be used to show your indoor conditions.</p>
+    <p class="text-center py-2">If this is checked, the latitude/longitude and refresh interval will be ignored, because your Luxigrid will not be connecting to the Internet for weather.</p>
+
+    <hr />
+
+    <!-- Refresh Interval -->
+    <label class="flex flex-col">
+      <span class="ml-2">Open-Meteo Refresh Interval (in milliseconds)</span>
+      <input type="text" inputmode="numeric" pattern="[0-9]*" class="bg-black/50 text-white focus:bg-black/90 p-2 m-2 rounded-md" id="refresh-interval" />
+    </label>
+
+    <p class="text-center py-2">This must be set to at least 60000 (one minute). 300000 (five minutes) is a reasonable default.</p>
+
+    <hr />
+
+    <p class="text-center py-2">Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer nofollow" class="text-white transition-colors duration-150 ease-linear hover:text-white/80 hover:no-underline">Open-Meteo.com</a>
+    <p class="text-center py-2">Open-Meteo's Free API is free for personal use. Do not abuse their generosity.</p>
+    <p class="text-center py-2">Please read and abide by Open-Meteo's privacy policy and terms of use: <br /><a href="https://open-meteo.com/en/terms/" target="_blank" rel="noopener noreferrer nofollow" class="text-white transition-colors duration-150 ease-linear hover:text-white/80 hover:no-underline">https://open-meteo.com/en/terms</a>
+
+    <hr class="my-6 border-blue-500/70" />
+
+    <!-- Save Button -->
+    <div class="-ml-2">
+      <button class="px-3 py-2 m-4 uppercase bg-blue-500/70 flex flex-col gap-y-3 justify-center items-center text-center rounded-md shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors">Save Weather Station Settings</button>
+    </div>
+  </div>
+</div>

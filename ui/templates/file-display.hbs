@@ -1,0 +1,27 @@
+<li class="list-none inline-flex items-center justify-between py-2 px-3 w-full">
+  <div class="inline-flex items-center text-center">
+    <div class="h-6 w-6 mr-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24">
+        <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M4 21.4V2.6a.6.6 0 0 1 .6-.6h11.652a.6.6 0 0 1 .424.176l3.148 3.148A.6.6 0 0 1 20 5.75V21.4a.6.6 0 0 1-.6.6H4.6a.6.6 0 0 1-.6-.6Z" />
+        <path stroke="#000" stroke-linecap="round" stroke-linejoin="round" d="M16 2v3.4a.6.6 0 0 0 .6.6H20" />
+      </svg>
+    </div>
+    <strong class="ml-2 mr-8">{{fileName}}</strong>
+  </div>
+
+<div class="inline-flex items-center">
+<span class="mx-3">[{{fileSize}}]</span>
+
+  <a label="download" class="download inline-flex items-center p-2 ml-3 rounded-md bg-blue-500/50 text-center shadow-md hover:bg-blue-600 hover:shadow-inner transition-colors" href="/download?file={{filePath}}" download="{{fileName}}">
+    <div class="h-4 w-4">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="M6 20h12M12 4v12m0 0 3.5-3.5M12 16l-3.5-3.5" /></svg>
+    </div>
+  </a>
+
+  <button label="delete" class="delete inline-flex items-center p-2 ml-3 rounded-md bg-red-500/50 text-center shadow-md hover:bg-red-600 hover:shadow-inner transition-colors">
+    <div class="h-4 w-4">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" viewBox="0 0 24 24"><path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" d="m20 9-1.995 11.346A2 2 0 0 1 16.035 22h-8.07a2 2 0 0 1-1.97-1.654L4 9M21 6h-5.625M3 6h5.625m0 0V4a2 2 0 0 1 2-2h2.75a2 2 0 0 1 2 2v2m-6.75 0h6.75" /></svg>
+    </div>
+  </button>
+</div>
+</li>

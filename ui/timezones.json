@@ -1,0 +1,1901 @@
+[
+    {
+        "region": "America",
+        "timezones": [
+            {
+                "name": "Adak",
+                "value": "HST10HDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Anchorage",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Anguilla",
+                "value": "AST4"
+            },
+            {
+                "name": "Antigua",
+                "value": "AST4"
+            },
+            {
+                "name": "Araguaina",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Buenos_Aires",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Catamarca",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Cordoba",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Jujuy",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/La_Rioja",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Mendoza",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Rio_Gallegos",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Salta",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/San_Juan",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/San_Luis",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Tucuman",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Argentina/Ushuaia",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Aruba",
+                "value": "AST4"
+            },
+            {
+                "name": "Asuncion",
+                "value": "<-04>4<-03>,M10.1.0/0,M3.4.0/0"
+            },
+            {
+                "name": "Atikokan",
+                "value": "EST5"
+            },
+            {
+                "name": "Bahia",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Bahia_Banderas",
+                "value": "CST6"
+            },
+            {
+                "name": "Barbados",
+                "value": "AST4"
+            },
+            {
+                "name": "Belem",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Belize",
+                "value": "CST6"
+            },
+            {
+                "name": "Blanc-Sablon",
+                "value": "AST4"
+            },
+            {
+                "name": "Boa_Vista",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Bogota",
+                "value": "<-05>5"
+            },
+            {
+                "name": "Boise",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Cambridge_Bay",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Campo_Grande",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Cancun",
+                "value": "EST5"
+            },
+            {
+                "name": "Caracas",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Cayenne",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Cayman",
+                "value": "EST5"
+            },
+            {
+                "name": "Chicago",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Chihuahua",
+                "value": "CST6"
+            },
+            {
+                "name": "Costa_Rica",
+                "value": "CST6"
+            },
+            {
+                "name": "Creston",
+                "value": "MST7"
+            },
+            {
+                "name": "Cuiaba",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Curacao",
+                "value": "AST4"
+            },
+            {
+                "name": "Danmarkshavn",
+                "value": "GMT0"
+            },
+            {
+                "name": "Dawson",
+                "value": "MST7"
+            },
+            {
+                "name": "Dawson_Creek",
+                "value": "MST7"
+            },
+            {
+                "name": "Denver",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Detroit",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Dominica",
+                "value": "AST4"
+            },
+            {
+                "name": "Edmonton",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Eirunepe",
+                "value": "<-05>5"
+            },
+            {
+                "name": "El_Salvador",
+                "value": "CST6"
+            },
+            {
+                "name": "Fortaleza",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Fort_Nelson",
+                "value": "MST7"
+            },
+            {
+                "name": "Glace_Bay",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Godthab",
+                "value": "<-02>2<-01>,M3.5.0/-1,M10.5.0/0"
+            },
+            {
+                "name": "Goose_Bay",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Grand_Turk",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Grenada",
+                "value": "AST4"
+            },
+            {
+                "name": "Guadeloupe",
+                "value": "AST4"
+            },
+            {
+                "name": "Guatemala",
+                "value": "CST6"
+            },
+            {
+                "name": "Guayaquil",
+                "value": "<-05>5"
+            },
+            {
+                "name": "Guyana",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Halifax",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Havana",
+                "value": "CST5CDT,M3.2.0/0,M11.1.0/1"
+            },
+            {
+                "name": "Hermosillo",
+                "value": "MST7"
+            },
+            {
+                "name": "Indiana/Indianapolis",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Knox",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Marengo",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Petersburg",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Tell_City",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Vevay",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Vincennes",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Indiana/Winamac",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Inuvik",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Iqaluit",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Jamaica",
+                "value": "EST5"
+            },
+            {
+                "name": "Juneau",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Kentucky/Louisville",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Kentucky/Monticello",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Kralendijk",
+                "value": "AST4"
+            },
+            {
+                "name": "La_Paz",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Lima",
+                "value": "<-05>5"
+            },
+            {
+                "name": "Los_Angeles",
+                "value": "PST8PDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Lower_Princes",
+                "value": "AST4"
+            },
+            {
+                "name": "Maceio",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Managua",
+                "value": "CST6"
+            },
+            {
+                "name": "Manaus",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Marigot",
+                "value": "AST4"
+            },
+            {
+                "name": "Martinique",
+                "value": "AST4"
+            },
+            {
+                "name": "Matamoros",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Mazatlan",
+                "value": "MST7"
+            },
+            {
+                "name": "Menominee",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Merida",
+                "value": "CST6"
+            },
+            {
+                "name": "Metlakatla",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Mexico_City",
+                "value": "CST6"
+            },
+            {
+                "name": "Miquelon",
+                "value": "<-03>3<-02>,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Moncton",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Monterrey",
+                "value": "CST6"
+            },
+            {
+                "name": "Montevideo",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Montreal",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Montserrat",
+                "value": "AST4"
+            },
+            {
+                "name": "Nassau",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "New_York",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Nipigon",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Nome",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Noronha",
+                "value": "<-02>2"
+            },
+            {
+                "name": "North_Dakota/Beulah",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "North_Dakota/Center",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "North_Dakota/New_Salem",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Nuuk",
+                "value": "<-02>2<-01>,M3.5.0/-1,M10.5.0/0"
+            },
+            {
+                "name": "Ojinaga",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Panama",
+                "value": "EST5"
+            },
+            {
+                "name": "Pangnirtung",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Paramaribo",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Phoenix",
+                "value": "MST7"
+            },
+            {
+                "name": "Port-au-Prince",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Port_of_Spain",
+                "value": "AST4"
+            },
+            {
+                "name": "Porto_Velho",
+                "value": "<-04>4"
+            },
+            {
+                "name": "Puerto_Rico",
+                "value": "AST4"
+            },
+            {
+                "name": "Punta_Arenas",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Rainy_River",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Rankin_Inlet",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Recife",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Regina",
+                "value": "CST6"
+            },
+            {
+                "name": "Resolute",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Rio_Branco",
+                "value": "<-05>5"
+            },
+            {
+                "name": "Santarem",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Santiago",
+                "value": "<-04>4<-03>,M9.1.6/24,M4.1.6/24"
+            },
+            {
+                "name": "Santo_Domingo",
+                "value": "AST4"
+            },
+            {
+                "name": "Sao_Paulo",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Scoresbysund",
+                "value": "<-01>1<+00>,M3.5.0/0,M10.5.0/1"
+            },
+            {
+                "name": "Sitka",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "St_Barthelemy",
+                "value": "AST4"
+            },
+            {
+                "name": "St_Johns",
+                "value": "NST3:30NDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "St_Kitts",
+                "value": "AST4"
+            },
+            {
+                "name": "St_Lucia",
+                "value": "AST4"
+            },
+            {
+                "name": "St_Thomas",
+                "value": "AST4"
+            },
+            {
+                "name": "St_Vincent",
+                "value": "AST4"
+            },
+            {
+                "name": "Swift_Current",
+                "value": "CST6"
+            },
+            {
+                "name": "Tegucigalpa",
+                "value": "CST6"
+            },
+            {
+                "name": "Thule",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Thunder_Bay",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Tijuana",
+                "value": "PST8PDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Toronto",
+                "value": "EST5EDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Tortola",
+                "value": "AST4"
+            },
+            {
+                "name": "Vancouver",
+                "value": "PST8PDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Whitehorse",
+                "value": "MST7"
+            },
+            {
+                "name": "Winnipeg",
+                "value": "CST6CDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Yakutat",
+                "value": "AKST9AKDT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Yellowknife",
+                "value": "MST7MDT,M3.2.0,M11.1.0"
+            }
+        ]
+    },
+    {
+        "region": "Africa",
+        "timezones": [
+            {
+                "name": "Abidjan",
+                "value": "GMT0"
+            },
+            {
+                "name": "Accra",
+                "value": "GMT0"
+            },
+            {
+                "name": "Addis_Ababa",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Algiers",
+                "value": "CET-1"
+            },
+            {
+                "name": "Asmara",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Bamako",
+                "value": "GMT0"
+            },
+            {
+                "name": "Bangui",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Banjul",
+                "value": "GMT0"
+            },
+            {
+                "name": "Bissau",
+                "value": "GMT0"
+            },
+            {
+                "name": "Blantyre",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Brazzaville",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Bujumbura",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Cairo",
+                "value": "EET-2EEST,M4.5.5/0,M10.5.4/24"
+            },
+            {
+                "name": "Casablanca",
+                "value": "<+01>-1"
+            },
+            {
+                "name": "Ceuta",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Conakry",
+                "value": "GMT0"
+            },
+            {
+                "name": "Dakar",
+                "value": "GMT0"
+            },
+            {
+                "name": "Dar_es_Salaam",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Djibouti",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Douala",
+                "value": "WAT-1"
+            },
+            {
+                "name": "El_Aaiun",
+                "value": "<+01>-1"
+            },
+            {
+                "name": "Freetown",
+                "value": "GMT0"
+            },
+            {
+                "name": "Gaborone",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Harare",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Johannesburg",
+                "value": "SAST-2"
+            },
+            {
+                "name": "Juba",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Kampala",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Khartoum",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Kigali",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Kinshasa",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Lagos",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Libreville",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Lome",
+                "value": "GMT0"
+            },
+            {
+                "name": "Luanda",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Lubumbashi",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Lusaka",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Malabo",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Maputo",
+                "value": "CAT-2"
+            },
+            {
+                "name": "Maseru",
+                "value": "SAST-2"
+            },
+            {
+                "name": "Mbabane",
+                "value": "SAST-2"
+            },
+            {
+                "name": "Mogadishu",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Monrovia",
+                "value": "GMT0"
+            },
+            {
+                "name": "Nairobi",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Ndjamena",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Niamey",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Nouakchott",
+                "value": "GMT0"
+            },
+            {
+                "name": "Ouagadougou",
+                "value": "GMT0"
+            },
+            {
+                "name": "Porto-Novo",
+                "value": "WAT-1"
+            },
+            {
+                "name": "Sao_Tome",
+                "value": "GMT0"
+            },
+            {
+                "name": "Tripoli",
+                "value": "EET-2"
+            },
+            {
+                "name": "Tunis",
+                "value": "CET-1"
+            },
+            {
+                "name": "Windhoek",
+                "value": "CAT-2"
+            }
+        ]
+    },
+    {
+        "region": "Asia",
+        "timezones": [
+            {
+                "name": "Aden",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Almaty",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Amman",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Anadyr",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Aqtau",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Aqtobe",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Ashgabat",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Atyrau",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Baghdad",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Bahrain",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Baku",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Bangkok",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Barnaul",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Beirut",
+                "value": "EET-2EEST,M3.5.0/0,M10.5.0/0"
+            },
+            {
+                "name": "Bishkek",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Brunei",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Chita",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "Choibalsan",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Colombo",
+                "value": "<+0530>-5:30"
+            },
+            {
+                "name": "Damascus",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Dhaka",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Dili",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "Dubai",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Dushanbe",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Famagusta",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Gaza",
+                "value": "EET-2EEST,M3.4.4/50,M10.4.4/50"
+            },
+            {
+                "name": "Hebron",
+                "value": "EET-2EEST,M3.4.4/50,M10.4.4/50"
+            },
+            {
+                "name": "Ho_Chi_Minh",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Hong_Kong",
+                "value": "HKT-8"
+            },
+            {
+                "name": "Hovd",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Irkutsk",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Jakarta",
+                "value": "WIB-7"
+            },
+            {
+                "name": "Jayapura",
+                "value": "WIT-9"
+            },
+            {
+                "name": "Jerusalem",
+                "value": "IST-2IDT,M3.4.4/26,M10.5.0"
+            },
+            {
+                "name": "Kabul",
+                "value": "<+0430>-4:30"
+            },
+            {
+                "name": "Kamchatka",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Karachi",
+                "value": "PKT-5"
+            },
+            {
+                "name": "Kathmandu",
+                "value": "<+0545>-5:45"
+            },
+            {
+                "name": "Khandyga",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "Kolkata",
+                "value": "IST-5:30"
+            },
+            {
+                "name": "Krasnoyarsk",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Kuala_Lumpur",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Kuching",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Kuwait",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Macau",
+                "value": "CST-8"
+            },
+            {
+                "name": "Magadan",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Makassar",
+                "value": "WITA-8"
+            },
+            {
+                "name": "Manila",
+                "value": "PST-8"
+            },
+            {
+                "name": "Muscat",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Nicosia",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Novokuznetsk",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Novosibirsk",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Omsk",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Oral",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Phnom_Penh",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Pontianak",
+                "value": "WIB-7"
+            },
+            {
+                "name": "Pyongyang",
+                "value": "KST-9"
+            },
+            {
+                "name": "Qatar",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Qyzylorda",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Riyadh",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Sakhalin",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Samarkand",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Seoul",
+                "value": "KST-9"
+            },
+            {
+                "name": "Shanghai",
+                "value": "CST-8"
+            },
+            {
+                "name": "Singapore",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Srednekolymsk",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Taipei",
+                "value": "CST-8"
+            },
+            {
+                "name": "Tashkent",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Tbilisi",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Tehran",
+                "value": "<+0330>-3:30"
+            },
+            {
+                "name": "Thimphu",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Tokyo",
+                "value": "JST-9"
+            },
+            {
+                "name": "Tomsk",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Ulaanbaatar",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "Urumqi",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Ust-Nera",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "Vientiane",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Vladivostok",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "Yakutsk",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "Yangon",
+                "value": "<+0630>-6:30"
+            },
+            {
+                "name": "Yekaterinburg",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Yerevan",
+                "value": "<+04>-4"
+            }
+        ]
+    },
+    {
+        "region": "Atlantic",
+        "timezones": [
+            {
+                "name": "Azores",
+                "value": "<-01>1<+00>,M3.5.0/0,M10.5.0/1"
+            },
+            {
+                "name": "Bermuda",
+                "value": "AST4ADT,M3.2.0,M11.1.0"
+            },
+            {
+                "name": "Canary",
+                "value": "WET0WEST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Cape_Verde",
+                "value": "<-01>1"
+            },
+            {
+                "name": "Faroe",
+                "value": "WET0WEST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Madeira",
+                "value": "WET0WEST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Reykjavik",
+                "value": "GMT0"
+            },
+            {
+                "name": "South_Georgia",
+                "value": "<-02>2"
+            },
+            {
+                "name": "Stanley",
+                "value": "<-03>3"
+            },
+            {
+                "name": "St_Helena",
+                "value": "GMT0"
+            }
+        ]
+    },
+    {
+        "region": "Australia",
+        "timezones": [
+            {
+                "name": "Adelaide",
+                "value": "ACST-9:30ACDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Brisbane",
+                "value": "AEST-10"
+            },
+            {
+                "name": "Broken_Hill",
+                "value": "ACST-9:30ACDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Currie",
+                "value": "AEST-10AEDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Darwin",
+                "value": "ACST-9:30"
+            },
+            {
+                "name": "Eucla",
+                "value": "<+0845>-8:45"
+            },
+            {
+                "name": "Hobart",
+                "value": "AEST-10AEDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Lindeman",
+                "value": "AEST-10"
+            },
+            {
+                "name": "Lord_Howe",
+                "value": "<+1030>-10:30<+11>-11,M10.1.0,M4.1.0"
+            },
+            {
+                "name": "Melbourne",
+                "value": "AEST-10AEDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Perth",
+                "value": "AWST-8"
+            },
+            {
+                "name": "Sydney",
+                "value": "AEST-10AEDT,M10.1.0,M4.1.0/3"
+            }
+        ]
+    },
+    {
+        "region": "Europe",
+        "timezones": [
+            {
+                "name": "Amsterdam",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Andorra",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Astrakhan",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Athens",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Belgrade",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Berlin",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Bratislava",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Brussels",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Bucharest",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Budapest",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Busingen",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Chisinau",
+                "value": "EET-2EEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Copenhagen",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Dublin",
+                "value": "IST-1GMT0,M10.5.0,M3.5.0/1"
+            },
+            {
+                "name": "Gibraltar",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Guernsey",
+                "value": "GMT0BST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Helsinki",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Isle_of_Man",
+                "value": "GMT0BST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Istanbul",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Jersey",
+                "value": "GMT0BST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Kaliningrad",
+                "value": "EET-2"
+            },
+            {
+                "name": "Kiev",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Kirov",
+                "value": "MSK-3"
+            },
+            {
+                "name": "Lisbon",
+                "value": "WET0WEST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Ljubljana",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "London",
+                "value": "GMT0BST,M3.5.0/1,M10.5.0"
+            },
+            {
+                "name": "Luxembourg",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Madrid",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Malta",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Mariehamn",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Minsk",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Monaco",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Moscow",
+                "value": "MSK-3"
+            },
+            {
+                "name": "Oslo",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Paris",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Podgorica",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Prague",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Riga",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Rome",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Samara",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "San_Marino",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Sarajevo",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Saratov",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Simferopol",
+                "value": "MSK-3"
+            },
+            {
+                "name": "Skopje",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Sofia",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Stockholm",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Tallinn",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Tirane",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Ulyanovsk",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Uzhgorod",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Vaduz",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Vatican",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Vienna",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Vilnius",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Volgograd",
+                "value": "MSK-3"
+            },
+            {
+                "name": "Warsaw",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Zagreb",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            },
+            {
+                "name": "Zaporozhye",
+                "value": "EET-2EEST,M3.5.0/3,M10.5.0/4"
+            },
+            {
+                "name": "Zurich",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            }
+        ]
+    },
+    {
+        "region": "Indian",
+        "timezones": [
+            {
+                "name": "Antananarivo",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Chagos",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "Christmas",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "Cocos",
+                "value": "<+0630>-6:30"
+            },
+            {
+                "name": "Comoro",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Kerguelen",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Mahe",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Maldives",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "Mauritius",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "Mayotte",
+                "value": "EAT-3"
+            },
+            {
+                "name": "Reunion",
+                "value": "<+04>-4"
+            }
+        ]
+    },
+    {
+        "region": "Pacific",
+        "timezones": [
+            {
+                "name": "Apia",
+                "value": "<+13>-13"
+            },
+            {
+                "name": "Auckland",
+                "value": "NZST-12NZDT,M9.5.0,M4.1.0/3"
+            },
+            {
+                "name": "Bougainville",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Chatham",
+                "value": "<+1245>-12:45<+1345>,M9.5.0/2:45,M4.1.0/3:45"
+            },
+            {
+                "name": "Chuuk",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "Easter",
+                "value": "<-06>6<-05>,M9.1.6/22,M4.1.6/22"
+            },
+            {
+                "name": "Efate",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Enderbury",
+                "value": "<+13>-13"
+            },
+            {
+                "name": "Fakaofo",
+                "value": "<+13>-13"
+            },
+            {
+                "name": "Fiji",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Funafuti",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Galapagos",
+                "value": "<-06>6"
+            },
+            {
+                "name": "Gambier",
+                "value": "<-09>9"
+            },
+            {
+                "name": "Guadalcanal",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Guam",
+                "value": "ChST-10"
+            },
+            {
+                "name": "Honolulu",
+                "value": "HST10"
+            },
+            {
+                "name": "Kiritimati",
+                "value": "<+14>-14"
+            },
+            {
+                "name": "Kosrae",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Kwajalein",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Majuro",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Marquesas",
+                "value": "<-0930>9:30"
+            },
+            {
+                "name": "Midway",
+                "value": "SST11"
+            },
+            {
+                "name": "Nauru",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Niue",
+                "value": "<-11>11"
+            },
+            {
+                "name": "Norfolk",
+                "value": "<+11>-11<+12>,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Noumea",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Pago_Pago",
+                "value": "SST11"
+            },
+            {
+                "name": "Palau",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "Pitcairn",
+                "value": "<-08>8"
+            },
+            {
+                "name": "Pohnpei",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Port_Moresby",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "Rarotonga",
+                "value": "<-10>10"
+            },
+            {
+                "name": "Saipan",
+                "value": "ChST-10"
+            },
+            {
+                "name": "Tahiti",
+                "value": "<-10>10"
+            },
+            {
+                "name": "Tarawa",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Tongatapu",
+                "value": "<+13>-13"
+            },
+            {
+                "name": "Wake",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "Wallis",
+                "value": "<+12>-12"
+            }
+        ]
+    },
+    {
+        "region": "Antarctica",
+        "timezones": [
+            {
+                "name": "Casey",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "Davis",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "DumontDUrville",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "Macquarie",
+                "value": "AEST-10AEDT,M10.1.0,M4.1.0/3"
+            },
+            {
+                "name": "Mawson",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "McMurdo",
+                "value": "NZST-12NZDT,M9.5.0,M4.1.0/3"
+            },
+            {
+                "name": "Palmer",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Rothera",
+                "value": "<-03>3"
+            },
+            {
+                "name": "Syowa",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "Troll",
+                "value": "<+00>0<+02>-2,M3.5.0/1,M10.5.0/3"
+            },
+            {
+                "name": "Vostok",
+                "value": "<+06>-6"
+            }
+        ]
+    },
+    {
+        "region": "Arctic",
+        "timezones": [
+            {
+                "name": "Longyearbyen",
+                "value": "CET-1CEST,M3.5.0,M10.5.0/3"
+            }
+        ]
+    },
+    {
+        "region": "Etc",
+        "timezones": [
+            {
+                "name": "GMT",
+                "value": "GMT0"
+            },
+            {
+                "name": "GMT-0",
+                "value": "GMT0"
+            },
+            {
+                "name": "GMT-1",
+                "value": "<+01>-1"
+            },
+            {
+                "name": "GMT-2",
+                "value": "<+02>-2"
+            },
+            {
+                "name": "GMT-3",
+                "value": "<+03>-3"
+            },
+            {
+                "name": "GMT-4",
+                "value": "<+04>-4"
+            },
+            {
+                "name": "GMT-5",
+                "value": "<+05>-5"
+            },
+            {
+                "name": "GMT-6",
+                "value": "<+06>-6"
+            },
+            {
+                "name": "GMT-7",
+                "value": "<+07>-7"
+            },
+            {
+                "name": "GMT-8",
+                "value": "<+08>-8"
+            },
+            {
+                "name": "GMT-9",
+                "value": "<+09>-9"
+            },
+            {
+                "name": "GMT-10",
+                "value": "<+10>-10"
+            },
+            {
+                "name": "GMT-11",
+                "value": "<+11>-11"
+            },
+            {
+                "name": "GMT-12",
+                "value": "<+12>-12"
+            },
+            {
+                "name": "GMT-13",
+                "value": "<+13>-13"
+            },
+            {
+                "name": "GMT-14",
+                "value": "<+14>-14"
+            },
+            {
+                "name": "GMT0",
+                "value": "GMT0"
+            },
+            {
+                "name": "GMT+0",
+                "value": "GMT0"
+            },
+            {
+                "name": "GMT+1",
+                "value": "<-01>1"
+            },
+            {
+                "name": "GMT+2",
+                "value": "<-02>2"
+            },
+            {
+                "name": "GMT+3",
+                "value": "<-03>3"
+            },
+            {
+                "name": "GMT+4",
+                "value": "<-04>4"
+            },
+            {
+                "name": "GMT+5",
+                "value": "<-05>5"
+            },
+            {
+                "name": "GMT+6",
+                "value": "<-06>6"
+            },
+            {
+                "name": "GMT+7",
+                "value": "<-07>7"
+            },
+            {
+                "name": "GMT+8",
+                "value": "<-08>8"
+            },
+            {
+                "name": "GMT+9",
+                "value": "<-09>9"
+            },
+            {
+                "name": "GMT+10",
+                "value": "<-10>10"
+            },
+            {
+                "name": "GMT+11",
+                "value": "<-11>11"
+            },
+            {
+                "name": "GMT+12",
+                "value": "<-12>12"
+            },
+            {
+                "name": "UCT",
+                "value": "UTC0"
+            },
+            {
+                "name": "UTC",
+                "value": "UTC0"
+            },
+            {
+                "name": "Greenwich",
+                "value": "GMT0"
+            },
+            {
+                "name": "Universal",
+                "value": "UTC0"
+            },
+            {
+                "name": "Zulu",
+                "value": "UTC0"
+            }
+        ]
+    }
+]
