@@ -5,6 +5,10 @@
   - **Apache 2.0 License** (licenses/APACHE_LICENSE.txt)
   - **GNU Lesser General Puglic License v3.0** (licenses/LGPL3_LICENSE.txt)
   - **BSD License** (licenses/BSD_LICENSE.txt)
+  - **CC-BY 4.0 License** (licenses/CC_BY_LICENSE.txt)
+  - **CC0 1.0 License** (licenses/CC0_LICENSE.txt)
+
+## Credits for Luxigrid Software
 
 ---
 
@@ -186,3 +190,49 @@
   - <https://github.com/richardtallent/vite-plugin-singlefile>
   - Copyright (c) 2021-present, Richard S. Tallent, II
   - MIT License
+
+---
+
+## Image Credits for [luxigrid.overscore.media](https://luxigrid.overscore.media)
+
+- 32x32 Pixel Art Creatures
+  - <https://opengameart.org/content/assorted-32x32-creatures>
+  - <https://opengameart.org/content/more-assorted-32x32-creatures>
+  - <https://opengameart.org/content/32x32-pixel-art-creatures-volume-3>
+  - Posted by AndHeGames on OpenGameArt
+  - CC0 License
+
+- 32x32 Portraits
+  - <https://opengameart.org/content/32-x-32-portraits>
+  - Posted by Seafood5040 on OpenGameArt
+  - CC0 License
+
+- CC0 Food Icons
+  - <https://opengameart.org/content/cc0-food-icons>
+  - Posted by AntumDesign on OpenGameArt
+  - CC0 License
+
+- CC0 Tool Icons
+  - <https://opengameart.org/content/cc0-tool-icons>
+  - Posted by AntumDeluge on OpenGameArt
+  - CC0 License
+
+- Hand Cursor
+  - <https://opengameart.org/content/hand-cursor>
+  - Posted by andreyin on OpenGameArt
+  - CC0 License
+
+- Hearts [32x32] & [16x16]
+  - <https://opengameart.org/content/hearts-32x32-16x16>
+  - Posted by Leozlk on OpenGameArt
+  - CC0 License
+
+- GitHub Icon
+  - <https://iconduck.com/icons/313558/github>
+  - Jérémie Pichon
+  - MIT License
+
+- Winter Birds
+  - <https://opengameart.org/content/winter-birds>
+  - Posted by Refuzzle on OpenGameArt
+  - CC0 License

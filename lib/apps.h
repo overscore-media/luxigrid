@@ -6,10 +6,10 @@
 // #define GIF_PLAYER
 // #define MORPHING_CLOCK
 // #define PONG_CLOCK
-//  #define STOCK_TICKER
-//  #define WEATHER_STATION
+// #define STOCK_TICKER
+// #define WEATHER_STATION
 
-#define ATTRACT
+// #define ATTRACT
 // #define BUBBLES
 // #define CODE_RAIN
 // #define DVD_LOGO
@@ -29,8 +29,8 @@
 // #define SIMPLEX_NOISE
 // #define SNAKE_GAME
 // #define SNAKES
-//  #define SWIRL
-//  #define TV_TEST_PATTERN
+// #define SWIRL
+// #define TV_TEST_PATTERN
 
 // These are the apps that have app-specific config
 #if defined(STOCK_TICKER) || defined(PONG_WARS) || defined(MORPHING_CLOCK) || defined(GIF_PLAYER) || defined(WEATHER_STATION)

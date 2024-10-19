@@ -12,3 +12,6 @@ lib/web_ui.h
 ui/.env
 
 ROADMAP.txt
+
+# Compiled code
+dist

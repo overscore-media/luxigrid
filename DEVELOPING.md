@@ -150,6 +150,8 @@ You'll also need to modify `/src/main.cpp` so your app's main source file is imp
 #endif
 ```
 
+Finally, you might want to update `/scripts/build_all_apps.py` to include your new app. That is, if you want it to be built along with the other apps when bulk-compiling them.
+
 ### Required Web Interface Setup
 
 Unfortunately this is only half the story (if app-specific config is involved). You'll still need to create a custom section on the web interface to enable users to interact with the app-specific config.
@@ -242,6 +244,7 @@ Here's the complete folder structure of this project, including some description
 - `/licenses` (licenses and credits for third-party code/libraries used in this project)
 
 - `/scripts` (automation helpers)
+  - `/scripts/build_all_apps.py` (used to compile all apps automatically, and generate a .ZIP of them)
   - `/scripts/build_ui.sh` (bash script used in conjunction with `generate_web_ui.py`)
   - `/scripts/generate_elements.py` (used to generate the list of elements for the periodic table app - kept here for future reference)
   - `/scripts/generate_web_ui.py` (ensures the web interface code is up to date before the rest of the C++ code is compiled)

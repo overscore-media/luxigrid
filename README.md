@@ -78,11 +78,11 @@ Needless to say, the underlying setup to make all of this work is pretty complex
 
 [View the full development instructions](./DEVELOPING.md).
 
-Alternatively, you can download the latest compiled versions of the available apps from the official [Luxigrid App Store](https://luxigrid.overscore.media/apps), or the GitHub Releases page.
+Alternatively, you can download the latest compiled versions of the available apps from the official [Luxigrid App Store](https://luxigrid.overscore.media/apps), or the [GitHub Releases page](https://github.com/overscore-media/luxigrid/releases).
 
 ## Found an Issue?
 
-Let us know by creating an Issue on this GitHub repository. Or if you have a bugfix, feature, or new application you'd like to share, feel free to open a Pull Request. We also welcome GitHub stars, forks, and watchers.
+Let us know by [creating an Issue](https://github.com/overscore-media/luxigrid/issues) on this GitHub repository. Or if you have a bugfix, feature, or new application you'd like to share, feel free to open a [Pull Request](https://github.com/overscore-media/luxigrid/pulls). We also welcome GitHub stars, forks, and watchers.
 
 For answers to specific questions, or if you just want to chat, drop us a line at [luxigrid.overscore.media](https://luxigrid.overscore.media).
 
