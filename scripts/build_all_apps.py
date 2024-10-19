@@ -75,7 +75,6 @@ for app in apps:
     # When running this script, make sure that /lib/apps.h has no app #define's set
     os.environ["PLATFORMIO_BUILD_FLAGS"] = f"-D {app_define}"
 
-    # Modify /ui/.env to build the proper web interface for this app
     try:
         if os.path.exists(env_file_path):
             with open(env_file_path, "r") as env_file:
@@ -85,18 +84,29 @@ for app in apps:
 
         updated_lines = []
         found_app_name_line = False
+        found_current_app_line = False
 
         for line in lines:
-            if 'config' in app and app["config"] and line.startswith("VITE_CURRENT_APP="):
-                updated_lines.append(f"VITE_CURRENT_APP={app_id}\n")
-            elif line.startswith("VITE_APP_NAME="):
+            stripped_line = line.strip()
+            if stripped_line.startswith("VITE_CURRENT_APP="):
+                if 'config' in app and app["config"]:
+                    updated_lines.append(f"VITE_CURRENT_APP={app_id}\n")
+                    found_current_app_line = True
+            elif stripped_line.startswith("VITE_APP_NAME="):
                 updated_lines.append(f"VITE_APP_NAME={app_name}\n")
                 found_app_name_line = True
             else:
+                # Preserve lines that don't match the targeted keys
                 updated_lines.append(line)
 
         if not found_app_name_line:
-            updated_lines.append(f"VITE_APP_NAME={app_name}\n")
+            updated_lines.append(f"\nVITE_APP_NAME={app_name}\n")
+
+        if 'config' in app and app["config"] and not found_current_app_line:
+            updated_lines.append(f"\nVITE_CURRENT_APP={app_id}\n")
+
+        if not updated_lines[-1].endswith('\n'):
+            updated_lines[-1] += '\n'
 
         with open(env_file_path, "w") as env_file:
             env_file.writelines(updated_lines)
