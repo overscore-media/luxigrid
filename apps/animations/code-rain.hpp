@@ -62,6 +62,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	for (int x = 0; x < PANEL_RES_X; x++) {
 		// Increment the position of the raindrop (i.e., move it down)
 		raindrops[x]++;

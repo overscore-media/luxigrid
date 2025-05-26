@@ -15,3 +15,10 @@ ROADMAP.txt
 
 # Compiled code
 dist
+
+# More auto-generated files
+CMakeLists.txt
+dependencies.lock
+sdkconfig.*
+managed_components
+.dummy

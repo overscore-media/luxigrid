@@ -186,36 +186,52 @@ document.addEventListener('DOMContentLoaded', async () => {
 	// Will hold the XHR to upload a new firmware file
 	let firmwareUploadRequest
 
-	const onFirmwareUploadProgress = e => {
-		if (e.lengthComputable) {
-			const percentComplete = (e.loaded / e.total) * 100
-			firmwareUploadProgress.value = percentComplete
-			firmwareUploadPercentage.textContent = percentComplete.toFixed(2) + '%'
-		}
-	}
+	const CHUNK_SIZE = 10240 // 10KB
 
-	const onFirmwareUploadError = () => {
-		alert('The firmware upload failed');
-		refreshAfterUpdate()
+	const onFirmwareUploadProgress = (e, totalSize, currentChunkOffset) => {
+		if (e.lengthComputable) {
+			const percentComplete = ((currentChunkOffset + e.loaded) / totalSize) * 100
+			firmwareUploadProgress.value = percentComplete
+			firmwareUploadPercentage.textContent = percentComplete.toFixed(0) + '%'
+		}
 	}
 
 	const onFirmwareUploadComplete = () => {
-		if (firmwareUploadRequest.status === 200) {
-			alert('Firmware uploaded successfully. Your Luxigrid will now reboot, loading your new application :)')
+		alert('Firmware uploaded successfully. Your Luxigrid will now reboot, loading your new application :)')
 
-			// Hide the firwmare upload progress bar here
-			firmwareUploadProgressWrapper.classList.add('hidden')
+		// Hide the firmware upload progress bar here
+		firmwareUploadProgressWrapper.classList.add('hidden')
+		refreshAfterUpdate()
+	}
 
-			refreshAfterUpdate()
-		} else {
-			alert('The firmware upload failed');
-			refreshAfterUpdate()
+	const uploadChunk = async (file, chunkStart, chunkEnd, totalSize) => new Promise((resolve, reject) => {
+		firmwareUploadRequest = new XMLHttpRequest()
+		firmwareUploadRequest.open('POST', `${window.API_URL}/updateFirmware`, true)
+
+		if (chunkStart === 0) {
+			// Add the full file size header in the first request
+			firmwareUploadRequest.setRequestHeader('X-Firmware-Size', totalSize)
 		}
 
-		firmwareUploadRequest.removeEventListener('load', onFirmwareUploadComplete);
-		firmwareUploadRequest.removeEventListener('error', onFirmwareUploadError);
-		firmwareUploadRequest.upload.removeEventListener('progres', onFirmwareUploadProgress)
-	}
+		firmwareUploadRequest.upload.addEventListener('progress', e =>
+			onFirmwareUploadProgress(e, totalSize, chunkStart),
+		)
+
+		firmwareUploadRequest.addEventListener('load', () => {
+			if (firmwareUploadRequest.status === 200) {
+				resolve()
+			} else {
+				reject(new Error('Failed to upload chunk'))
+			}
+		})
+		firmwareUploadRequest.addEventListener('error', () => reject(new Error('Chunk upload error')))
+
+		// Prepare the chunk and send it
+		const chunk = file.slice(chunkStart, chunkEnd)
+		const formData = new FormData()
+		formData.append('file', chunk)
+		firmwareUploadRequest.send(formData)
+	})
 
 	uploadFirmwareButton.addEventListener('click', async () => {
 		if (!uploadFirmwareInput.files[0]) {
@@ -236,24 +252,23 @@ document.addEventListener('DOMContentLoaded', async () => {
 		}
 
 		uploadFirmwareButton.disabled = true
-		const formData = new FormData()
-		formData.append('file', uploadFirmwareInput.files[0])
+
+		// Unhide the upload progress bar here
+		firmwareUploadProgressWrapper.classList.remove('hidden')
+
+		const file = uploadFirmwareInput.files[0]
+		const totalSize = file.size
+		let currentChunkStart = 0
 
 		try {
-			// Unhide the upload progress bar here
-			firmwareUploadProgressWrapper.classList.remove('hidden')
+			while (currentChunkStart < totalSize) {
+				const chunkEnd = Math.min(currentChunkStart + CHUNK_SIZE, totalSize)
+				await uploadChunk(file, currentChunkStart, chunkEnd, totalSize)
+				currentChunkStart = chunkEnd
+			}
 
-			// Initialize the API request
-			firmwareUploadRequest = new XMLHttpRequest()
-			firmwareUploadRequest.open('POST', `${window.API_URL}/updateFirmware`, true)
-
-			// Set the event listeners
-			firmwareUploadRequest.upload.addEventListener('progress', onFirmwareUploadProgress)
-			firmwareUploadRequest.addEventListener('load', onFirmwareUploadComplete)
-			firmwareUploadRequest.addEventListener('error', onFirmwareUploadError)
-
-			// Send the data
-			firmwareUploadRequest.send(formData)
+			// All chunks uploaded successfully
+			onFirmwareUploadComplete()
 		} catch {
 			alert('An error occurred during the firmware upload.');
 			refreshAfterUpdate()
@@ -460,7 +475,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 		sdUploadRequest.removeEventListener('load', onSDUploadComplete);
 		sdUploadRequest.removeEventListener('error', onSDUploadError);
-		sdUploadRequest.upload.removeEventListener('progres', onSDUploadProgress)
+		sdUploadRequest.upload.removeEventListener('progress', onSDUploadProgress)
 	}
 
 	uploadToSDButton.addEventListener('click', async () => {

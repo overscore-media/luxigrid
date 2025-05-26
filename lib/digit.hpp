@@ -32,6 +32,7 @@
 #define DIGIT_GUARD
 
 #include "Arduino.h"
+#include "luxigrid.h"
 
 class Digit {
 	public:

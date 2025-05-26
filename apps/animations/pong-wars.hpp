@@ -49,7 +49,7 @@ PongWarsConfig pongWarsConfig;
 const char *pongWarsConfigFilename = "/config/apps/pong_wars.json";
 
 bool importPongWarsConfig(const JsonDocument &jsonDoc) {
-	if (!jsonDoc.containsKey("colour1") || !jsonDoc.containsKey("colour2") || !jsonDoc["colour1"].is<JsonObjectConst>() || !jsonDoc["colour2"].is<JsonObjectConst>()) {
+	if (!jsonDoc["colour1"].is<JsonObjectConst>() || !jsonDoc["colour2"].is<JsonObjectConst>()) {
 		return false;
 	}
 
@@ -57,12 +57,12 @@ bool importPongWarsConfig(const JsonDocument &jsonDoc) {
 	JsonObjectConst colour2 = jsonDoc["colour2"].as<JsonObjectConst>();
 
 	// Return false if the colour1 format is invalid
-	if (!colour1.containsKey("r") || !colour1["r"].is<uint8_t>() || !colour1.containsKey("g") || !colour1["g"].is<uint8_t>() || !colour1.containsKey("b") || !colour1["b"].is<uint8_t>()) {
+	if (!colour1["r"].is<uint8_t>() || !colour1["g"].is<uint8_t>() || !colour1["b"].is<uint8_t>()) {
 		return false;
 	}
 
 	// Return false if the colour2 format is invalid
-	if (!colour2.containsKey("r") || !colour2["r"].is<uint8_t>() || !colour2.containsKey("g") || !colour2["g"].is<uint8_t>() || !colour2.containsKey("b") || !colour2["b"].is<uint8_t>()) {
+	if (!colour2["r"].is<uint8_t>() || !colour2["g"].is<uint8_t>() || !colour2["b"].is<uint8_t>()) {
 		return false;
 	}
 
@@ -183,7 +183,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (deserializationError || !importPongWarsConfig(jsonDoc)) {
 			request->send(400, "text/plain", "Pong Wars colour configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		shouldSaveConfig = true;
@@ -350,6 +351,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	// 四角形の描画 [Draw the squares]
 	for (int i = 0; i < squares.size(); i++) {
 		for (int j = 0; j < squares[i].size(); j++) {

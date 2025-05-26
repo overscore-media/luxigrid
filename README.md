@@ -46,7 +46,7 @@ For technical support, you can also contact us on [our website](https://luxigrid
   - WiFi (b/g/n 2.4 GHz) and Bluetooth 4.2
   - 240 MHz Clock Speed
   - 520 KB SRAM (16 KB cache) and 448 KB ROM
-  - 1.5 MB of usable flash memory (with OTA updates enabled)
+  - 1.75 MB of usable flash memory (with OTA updates enabled)
   - Readily available on many sites for under $10
   - Reference: <https://docs.espressif.com/projects/esp-idf/en/stable/esp32/hw-reference/esp32/get-started-devkitc.html>
 

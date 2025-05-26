@@ -114,7 +114,7 @@ bool validateLatLong(const char *coords) {
 }
 
 bool importWeatherStationConfig(const JsonDocument &jsonDoc) {
-	if (!jsonDoc.containsKey("refreshInterval") || !jsonDoc["refreshInterval"].is<unsigned long>() || !jsonDoc.containsKey("latitude") || !jsonDoc["latitude"].is<const char *>() || strlen(jsonDoc["latitude"]) >= sizeof(weatherStationConfig.latitude) || !validateLatLong(jsonDoc["latitude"]) || !jsonDoc.containsKey("longitude") || !jsonDoc["longitude"].is<const char *>() || strlen(jsonDoc["longitude"]) >= sizeof(weatherStationConfig.longitude) || !validateLatLong(jsonDoc["longitude"]) || !jsonDoc.containsKey("insideOnly") || !jsonDoc["insideOnly"].is<bool>()) {
+	if (!jsonDoc["refreshInterval"].is<unsigned long>() || !jsonDoc["latitude"].is<const char *>() || strlen(jsonDoc["latitude"]) >= sizeof(weatherStationConfig.latitude) || !validateLatLong(jsonDoc["latitude"]) || !jsonDoc["longitude"].is<const char *>() || strlen(jsonDoc["longitude"]) >= sizeof(weatherStationConfig.longitude) || !validateLatLong(jsonDoc["longitude"]) || !jsonDoc["insideOnly"].is<bool>()) {
 		return false;
 	}
 
@@ -228,7 +228,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(refreshInterval->value())) {
 			request->send(400, "text/plain", "OpenMeteo Refresh Interval configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		unsigned long refreshIntervalToInt = strtoul(refreshInterval->value().c_str(), nullptr, 10);
@@ -241,7 +242,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "OpenMeteo Refresh Interval configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 
@@ -250,7 +252,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!validateLatLong(latitude->value().c_str())) {
 			request->send(400, "text/plain", "Weather Station latitude configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		strlcpy(weatherStationConfig.latitude, latitude->value().c_str(), sizeof(weatherStationConfig.latitude));
@@ -262,7 +265,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!validateLatLong(longitude->value().c_str())) {
 			request->send(400, "text/plain", "Weather Station longitude configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		strlcpy(weatherStationConfig.longitude, longitude->value().c_str(), sizeof(weatherStationConfig.longitude));
@@ -278,7 +282,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			weatherStationConfig.insideOnly = false;
 		} else {
 			request->send(400, "text/plain", "Weather Station inside-only configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 		shouldSaveConfig = true;
 	}
@@ -421,6 +426,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	DateTime rtcTime = rtc.now();
 	time_t utcTimestamp = rtcTime.unixtime();
 
@@ -475,6 +486,11 @@ void loop() {
 		// Display the weather data attribution (will be shown for 20s after every API request)
 		showDataAttribution = true;
 		lastAttributionTime = millis();
+	}
+
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		return;
 	}
 
 	// Display time

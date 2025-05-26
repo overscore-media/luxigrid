@@ -46,7 +46,7 @@ const char *morphingClockConfigFilename = "/config/apps/morphing_clock.json";
 
 bool importMorphingClockConfig(const JsonDocument &jsonDoc) {
 	// Return false if the morphing clock config doesn't have a valid r, g, or b value
-	if (!jsonDoc.containsKey("r") || !jsonDoc["r"].is<uint8_t>() || !jsonDoc.containsKey("g") || !jsonDoc["g"].is<uint8_t>() || !jsonDoc.containsKey("b") || !jsonDoc["b"].is<uint8_t>()) {
+	if (!jsonDoc["r"].is<uint8_t>() || !jsonDoc["g"].is<uint8_t>() || !jsonDoc["b"].is<uint8_t>()) {
 		return false;
 	}
 
@@ -146,7 +146,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 	if (request->hasParam("r", true)) {
 		if (!request->hasParam("r", true) || !request->hasParam("g", true) || !request->hasParam("b", true)) {
 			request->send(400, "text/plain", "Morphing Clock colour configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		const AsyncWebParameter *r = request->getParam("r", true);
@@ -155,7 +156,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(r->value()) || !stringIsNumeric(g->value()) || !stringIsNumeric(b->value())) {
 			request->send(400, "text/plain", "Morphing Clock colour configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		int rInt = r->value().toInt();
@@ -170,7 +172,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "Morphing Clock colour configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		shouldSaveConfig = true;
@@ -280,6 +283,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	DateTime rtcTime = rtc.now();
 	time_t utcTimestamp = rtcTime.unixtime();
 

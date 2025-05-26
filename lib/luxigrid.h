@@ -50,14 +50,25 @@
 #define B2_PIN 5
 
 #define A_PIN 18
-#define B_PIN 25  // 26
+#define B_PIN 25
 #define C_PIN 17
-#define D_PIN 33  // 25
-#define E_PIN 26  // -1
+#define D_PIN 33
+#define E_PIN 26
 
 #define CLK_PIN 23
-#define LAT_PIN 32  // 33
-#define OE_PIN 0    // 32
+#define LAT_PIN 32
+#define OE_PIN 0
+
+// Alternate pins for PCB Version 1.30:
+// #define A_PIN 18
+// #define B_PIN 26  // 26  --> 25
+// #define C_PIN 17
+// #define D_PIN 25  // 25 --> 33
+// #define E_PIN -1  // -1 --> 26
+
+// #define CLK_PIN 23
+// #define LAT_PIN 33  // 33 --> 32
+// #define OE_PIN 32   // 32 --> 0
 
 // SD Card Pins
 #define SPI_SCK 14
@@ -148,6 +159,7 @@ void setupMatrix();
 void playBootAnimation();
 void playWiFiAnimation();
 void showWiFiInformation(String ssid, String ipAddressString);
+void playOTALoadingAnimation();
 void crashWithErrorCode(uint16_t errorCode);
 
 // Utility Functions

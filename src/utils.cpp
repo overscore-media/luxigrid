@@ -219,15 +219,11 @@ void setPanelBrightness(unsigned long currentMillis) {
 }
 
 bool importWifiConfig(const JsonDocument &jsonDoc) {
-	if (!jsonDoc.containsKey("ssid") || !jsonDoc["ssid"].is<const char *>() || strlen(jsonDoc["ssid"]) >= sizeof(wifiConfig.ssid) || !jsonDoc.containsKey("password") || !jsonDoc["password"].is<const char *>() || strlen(jsonDoc["password"]) >= sizeof(wifiConfig.password)) {
+	if (!jsonDoc["ssid"].is<const char *>() || strlen(jsonDoc["ssid"]) >= sizeof(wifiConfig.ssid) || !jsonDoc["password"].is<const char *>() || strlen(jsonDoc["password"]) >= sizeof(wifiConfig.password)) {
 		return false;
 	}
 
-	if (!jsonDoc.containsKey("retries") || !jsonDoc["retries"].is<int8_t>() || !jsonDoc.containsKey("isAccessPoint") || !jsonDoc["isAccessPoint"].is<bool>()) {
-		Serial.println(!jsonDoc.containsKey("retries"));
-		Serial.println(!jsonDoc["retries"].is<int>());
-		Serial.println(!jsonDoc.containsKey("isAccessPoint"));
-		Serial.println(!jsonDoc["isAccessPoint"].is<bool>());
+	if (!jsonDoc["retries"].is<int8_t>() || !jsonDoc["isAccessPoint"].is<bool>()) {
 		return false;
 	}
 
@@ -240,7 +236,7 @@ bool importWifiConfig(const JsonDocument &jsonDoc) {
 }
 
 bool importGlobalConfig(const JsonDocument &jsonDoc) {
-	if (!jsonDoc.containsKey("timezone") || !jsonDoc["timezone"].is<const char *>() || strlen(jsonDoc["timezone"]) >= sizeof(globalConfig.timezone) || !jsonDoc.containsKey("humanReadableTimezone") || !jsonDoc["humanReadableTimezone"].is<const char *>() || strlen(jsonDoc["humanReadableTimezone"]) >= sizeof(globalConfig.humanReadableTimezone) || !jsonDoc.containsKey("disableBH1750") || !jsonDoc["disableBH1750"].is<bool>() || !jsonDoc.containsKey("brightness") || !jsonDoc["brightness"].is<uint8_t>() || !jsonDoc.containsKey("ntpServer") || !jsonDoc["ntpServer"].is<const char *>() || strlen(jsonDoc["ntpServer"]) >= sizeof(globalConfig.ntpServer) || !jsonDoc.containsKey("disableNTP") || !jsonDoc["disableNTP"].is<bool>() || !jsonDoc.containsKey("luxThreshold") || !jsonDoc["luxThreshold"].is<uint16_t>() || !jsonDoc.containsKey("bh1750Delay") || !jsonDoc["bh1750Delay"].is<unsigned long>() || !jsonDoc.containsKey("bme680Delay") || !jsonDoc["bme680Delay"].is<unsigned long>() || !jsonDoc.containsKey("is24h") || !jsonDoc["is24h"].is<bool>() || !jsonDoc.containsKey("isCelcius") || !jsonDoc["isCelcius"].is<bool>()) {
+	if (!jsonDoc["timezone"].is<const char *>() || strlen(jsonDoc["timezone"]) >= sizeof(globalConfig.timezone) || !jsonDoc["humanReadableTimezone"].is<const char *>() || strlen(jsonDoc["humanReadableTimezone"]) >= sizeof(globalConfig.humanReadableTimezone) || !jsonDoc["disableBH1750"].is<bool>() || !jsonDoc["brightness"].is<uint8_t>() || !jsonDoc["ntpServer"].is<const char *>() || strlen(jsonDoc["ntpServer"]) >= sizeof(globalConfig.ntpServer) || !jsonDoc["disableNTP"].is<bool>() || !jsonDoc["luxThreshold"].is<uint16_t>() || !jsonDoc["bh1750Delay"].is<unsigned long>() || !jsonDoc["bme680Delay"].is<unsigned long>() || !jsonDoc["is24h"].is<bool>() || !jsonDoc["isCelcius"].is<bool>()) {
 		return false;
 	}
 
@@ -466,15 +462,33 @@ void runBackgroundTasks(void *pvParameters) {
 			dnsServer.processNextRequest();
 		}
 
-		// Optional: introduce a small delay to prevent the task from monopolizing CPU time
+		static bool otaLoadingMessageShown;
+
+		if (otaUpdateInProgress) {
+			// If an OTA Update has just started, ensure the screen has been cleared before displaying the loading message
+			if (!otaLoadingMessageShown) {
+				dma_display->clearScreen();
+				otaLoadingMessageShown = true;
+			}
+
+			playOTALoadingAnimation();
+		} else if (!otaUpdateInProgress && otaLoadingMessageShown) {
+			// Clear the screen if an OTA update has been cancelled/is no longer in progress (unlikely but possible)
+			dma_display->clearScreen();
+			otaLoadingMessageShown = false;
+			vTaskDelay(100 / portTICK_PERIOD_MS);
+		}
+
+		// Trigger a restart of the ESP32, if some function has called for it
+		if (shouldRestart) {
+			restart();
+		}
+
 		vTaskDelay(10 / portTICK_PERIOD_MS);
 	}
 }
 
-// https://github.com/ayushsharma82/AsyncElegantOTA/blob/master/src/AsyncElegantOTA.cpp
 void restart() {
-	yield();
-	delay(1000);
-	yield();
+	delay(1500);
 	ESP.restart();
 }

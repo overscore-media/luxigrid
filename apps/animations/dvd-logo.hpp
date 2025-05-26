@@ -73,6 +73,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	dma_display->clearScreen();
 
 	// Make a rainbow effect after hitting a corner of the screen

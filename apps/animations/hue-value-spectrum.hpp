@@ -53,6 +53,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	float t = (float)((millis() % 4000) / 4000.f);
 	float tt = (float)((millis() % 16000) / 16000.f);
 

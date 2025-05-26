@@ -45,10 +45,7 @@
 
 AnimatedGIF gif;
 
-// Bring in maxGifDuration from wherever it was defined outside this file (i.e., gif-player.cpp)
-// extern const int maxGifDuration;
-
-extern GifPlayerConfig gifPlayerConfig;
+unsigned long getMaxGifDuration();
 
 extern File FSGifFile;
 
@@ -207,8 +204,13 @@ int gifPlay(const char *gifPath) {
 	while (gif.playFrame(true, &frameDelay)) {
 		then += frameDelay;
 
+		// If an OTA update is in progress, cancel showing this GIF and break out of this function
+		if (otaUpdateInProgress) {
+			break;
+		}
+
 		// Avoid being trapped in infinite GIF's
-		if (then > gifPlayerConfig.maxGifDuration) {
+		if (then > getMaxGifDuration()) {
 			break;
 		}
 	}

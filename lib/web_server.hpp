@@ -5,7 +5,18 @@
 
 #include "web_ui.h"
 
-AsyncEventSource sseHandler("/events");
+// Initially, no OTA update will be in progress
+// But it will be set in the updateFirmware method below, when applicable
+bool otaUpdateInProgress = false;
+uint8_t otaUpdatePercentComplete = 0;
+
+// When this is set, the ESP32 will restart in approximately 1.5s
+bool shouldRestart = false;
+
+// TODO: Test this thoroughly
+bool isUpdating = false;
+size_t totalFirmwareSize = 0;
+size_t bytesReceived = 0;
 
 void getSDFiles(AsyncWebServerRequest *request, String path = "/") {
 	AsyncResponseStream *response = request->beginResponseStream("application/json");
@@ -107,12 +118,8 @@ void recursivelyDelete(String path) {
 
 // For uploading files onto the SD card
 void handleFileUpload(AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
-	static size_t totalSize = 0;
-
 	// If this is the first chunk, initialize the file upload process
 	if (index == 0) {
-		totalSize = request->contentLength();
-
 		if (!request->hasParam("path", true)) {
 			request->send(400, "text/plain", "Please specify a path");
 			return;
@@ -136,12 +143,6 @@ void handleFileUpload(AsyncWebServerRequest *request, String filename, size_t in
 	if (len) {
 		File file = request->_tempFile;
 		file.write(data, len);
-
-		// Handle SSE to notify the client on upload progress
-		float progress = (index + len) / (float)totalSize * 100.0;
-		char msg[32];
-		sprintf(msg, "progress:%u%%", (unsigned int)progress);
-		sseHandler.send(msg, "upload-progress", millis());
 	}
 
 	// If this is the last chunk, finalize the upload
@@ -149,7 +150,6 @@ void handleFileUpload(AsyncWebServerRequest *request, String filename, size_t in
 		File file = request->_tempFile;
 		file.close();
 		request->send(200, "text/plain", "File upload succeeded");
-		totalSize = 0;
 	}
 }
 
@@ -307,7 +307,7 @@ void setupWebServer() {
 		request->send(200, "text/plain", "File/folder deleted successfully");
 	});
 
-	// Route for handling WiFi config updatese
+	// Route for handling WiFi config updates
 	server.on("/wifi", HTTP_POST, [](AsyncWebServerRequest *request) {
 		bool shouldSaveConfig = false;
 
@@ -321,7 +321,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "WiFi SSID configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -335,7 +336,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "WiFi Password configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -353,7 +355,8 @@ void setupWebServer() {
 			wifiConfig.isAccessPoint = false;
 
 			saveWifiConfig();
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	});
 
@@ -373,7 +376,8 @@ void setupWebServer() {
 			// Send back an error response if an error was thrown
 			if (endPtr == timestampString || errno == ERANGE || timestamp < 0) {
 				request->send(400, "text/plain", "Time and Date update configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			} else {
 				// Update the RTC with the timestamp, if it is valid
 				Serial.println("Received valid timestamp: ");
@@ -393,51 +397,157 @@ void setupWebServer() {
 
 	// Route to perform an OTA firmware update
 	server.on(
-	    "/updateFirmware", HTTP_POST,
+	    "/updateFirmware", HTTP_PUT,
 
 	    [](AsyncWebServerRequest *request) {
 		    AsyncWebServerResponse *response = request->beginResponse((Update.hasError()) ? 500 : 200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
 		    response->addHeader("Connection", "close");
 		    response->addHeader("Access-Control-Allow-Origin", "*");
 		    request->send(response);
-		    restart();
+		    shouldRestart = true;
+		    return;
 	    },
 
 	    [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
-		    static size_t totalSize = 0;
+		    size_t *totalSize;
 
 		    // If this is the first chunk, initialize the file upload process
 		    if (index == 0) {
-			    totalSize = request->contentLength();
+			    // Allocate and store totalSize in the request context
+			    request->_tempObject = new size_t(request->contentLength());
+			    totalSize = (size_t *)request->_tempObject;
+
+			    // Set the OTA Update in Progress flag
+			    otaUpdatePercentComplete = 0;
+			    otaUpdateInProgress = true;
+			    dma_display->clearScreen();
 
 			    if (!Update.begin(UPDATE_SIZE_UNKNOWN, U_FLASH)) {
-				    restart();
-				    return request->send(400, "text/plain", "OTA could not begin");
+				    request->send(400, "text/plain", "OTA could not begin");
+				    shouldRestart = true;
+				    return;
 			    }
+		    } else {
+			    // For subsequent chunks, get the totalSize here
+			    totalSize = (size_t *)request->_tempObject;
+		    }
+
+		    // Just in case totalSize wasn't set above, cancel the request with an error here (better than crashing over a null pointer issue)
+		    if (totalSize == nullptr) {
+			    // Since the ESP32 is not being restarted, unset the OTA Update in Progress flag
+			    otaUpdateInProgress = false;
+			    return request->send(500, "text/plain", "A server error occurred");
 		    }
 
 		    if (len) {
 			    if (Update.write(data, len) != len) {
-				    restart();
-				    return request->send(400, "text/plain", "OTA could not begin");
+				    request->send(400, "text/plain", "OTA could not begin");
+				    shouldRestart = true;
+				    return;
 			    }
 
-			    // Handle SSE to notify the client on upload progress
-			    float progress = (index + len) / (float)totalSize * 100.0;
-			    char msg[32];
-			    sprintf(msg, "progress:%u%%", (unsigned int)progress);
-			    sseHandler.send(msg, "upload-progress", millis());
+			    float progress = (index + len) / (float)(*totalSize) * 100.0;
+
+			    // Update the on-screen loading progress indicator
+			    otaUpdatePercentComplete = static_cast<uint8_t>(round(progress));
 		    }
 
 		    if (final) {
 			    if (!Update.end(true)) {
-				    totalSize = 0;
 				    Update.printError(Serial);
 				    request->send(400, "text/plain", "Could not end OTA");
-				    restart();
+				    shouldRestart = true;
+				    return;
 			    }
 		    } else {
 			    return;
+		    }
+	    });
+
+	// TODO: Better error handling
+	// TODO: Only one chunk at a time
+	// TODO: Timeout if last part never received
+	// TODO: Progress indicator
+	// TODO: JS Code and testing
+
+	// Route to perform an OTA firmware update
+	server.on(
+	    "/updateFirmware", HTTP_POST,
+
+	    [](AsyncWebServerRequest *request) {
+		    AsyncWebServerResponse *response = request->beginResponse((Update.hasError()) ? 500 : 200, "text/plain", (Update.hasError()) ? "FAIL" : "OK");
+
+		    response->addHeader("Connection", "close");
+		    response->addHeader("Access-Control-Allow-Origin", "*");
+		    request->send(response);
+
+		    if (Update.hasError()) {
+			    shouldRestart = true;
+		    }
+
+		    isUpdating = false;
+	    },
+
+	    [](AsyncWebServerRequest *request, String filename, size_t index, uint8_t *data, size_t len, bool final) {
+		    if (index == 0) {
+			    if (request->hasHeader("X-Firmware-Size")) {
+				    if (bytesReceived != 0) {
+					    request->send(400, "text/plain", "Update failed");
+					    shouldRestart = true;
+					    return;
+				    }
+
+				    totalFirmwareSize = request->getHeader("X-Firmware-Size")->value().toInt();
+
+				    if (!Update.begin(totalFirmwareSize)) {
+					    request->send(400, "text/plain", "Failed to start update");
+					    return;
+				    }
+
+				    // Set the OTA Update in Progress flag
+				    otaUpdatePercentComplete = 0;
+				    otaUpdateInProgress = true;
+				    dma_display->clearScreen();
+			    } else if (bytesReceived == 0) {
+				    request->send(400, "text/plain", "Missing firmware size header");
+				    return;
+			    }
+		    }
+
+		    if (len) {
+			    size_t amount_written = Update.write(data, len);
+			    bytesReceived += amount_written;
+			    if (len != amount_written) {
+				    request->send(400, "text/plain", "OTA update failed");
+				    shouldRestart = true;
+				    return;
+			    }
+
+			    float progress = bytesReceived / (float)totalFirmwareSize * 100.0;
+
+			    // Update the on-screen loading progress indicator
+			    otaUpdatePercentComplete = static_cast<uint8_t>(round(progress));
+		    }
+
+		    Serial.print("Written ");
+		    Serial.print(bytesReceived);
+		    Serial.print(" of ");
+		    Serial.println(totalFirmwareSize);
+
+		    if (bytesReceived == totalFirmwareSize) {
+			    if (!final) {
+				    request->send(400, "text/plain", "OTA update failed to complete");
+				    shouldRestart = true;
+				    return;
+			    } else if (!Update.end(true)) {
+				    Update.printError(Serial);
+				    request->send(400, "text/plain", "Could not end OTA");
+				    shouldRestart = true;
+				    return;
+			    } else {
+				    request->send(200, "text/plain", "OTA Update successful");
+				    shouldRestart = true;
+			    }
 		    }
 	    });
 
@@ -491,7 +601,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Temperature Format configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -506,14 +617,16 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Temperature Format configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
 		// timezone and humanReadableTimezone go hand in hand, so they must both be present on the request
 		if ((request->hasParam("timezone", true) && !request->hasParam("humanReadableTimezone", true)) || (!request->hasParam("timezone", true) && request->hasParam("humanReadableTimezone", true))) {
 			request->send(400, "text/plain", "Timezone configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		if (request->hasParam("timezone", true)) {
@@ -525,7 +638,8 @@ void setupWebServer() {
 
 			if (strlen(timezoneString) == 0 || strlen(humanReadableTimezoneString) == 0 || strlen(timezoneString) >= sizeof(globalConfig.timezone) || strlen(humanReadableTimezoneString) >= sizeof(globalConfig.humanReadableTimezone)) {
 				request->send(400, "text/plain", "Timezone configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			// Note how these aren't checked against some database, since we don't really have the space
@@ -546,7 +660,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Disable Light Sensor configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -555,7 +670,8 @@ void setupWebServer() {
 
 			if (!stringIsNumeric(brightness->value())) {
 				request->send(400, "text/plain", "Manual Brightness configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			int brightnessToInt = brightness->value().toInt();
@@ -565,7 +681,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Manual Brightness configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -574,7 +691,8 @@ void setupWebServer() {
 
 			if (!stringIsNumeric(luxThreshold->value())) {
 				request->send(400, "text/plain", "Lux Threshold configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			int luxThresholdToInt = luxThreshold->value().toInt();
@@ -584,7 +702,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Lux Threshold configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -593,7 +712,8 @@ void setupWebServer() {
 
 			if (!stringIsNumeric(bh1750Delay->value())) {
 				request->send(400, "text/plain", "Light Sensor Measurement Delay configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			unsigned long bh1750DelayToInt = strtoul(bh1750Delay->value().c_str(), nullptr, 10);
@@ -605,7 +725,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Light Sensor Measurement Delay configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -614,7 +735,8 @@ void setupWebServer() {
 
 			if (!stringIsNumeric(bme680Delay->value())) {
 				request->send(400, "text/plain", "Temperature/Humidity Sensor Measurement Delay configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			unsigned long bme680DelayToInt = strtoul(bme680Delay->value().c_str(), nullptr, 10);
@@ -626,7 +748,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Temperature/Humidity Sensor Measurement Delay configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -636,17 +759,17 @@ void setupWebServer() {
 			const char *ntpServerString = ntpServer->value().c_str();
 
 			if (strlen(ntpServerString) == 0 || strlen(ntpServerString) >= sizeof(globalConfig.ntpServer)) {
-				Serial.println("oops");
-
 				request->send(400, "text/plain", "Custom NTP Server configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			// Note how the NTP server is actually checked here; so this will fail if there is no Internet connection
 			// But that's not a huge deal, since an NTP server doesn't mean much if you don't have an Internet connection
 			if (!verifyNTPServer(ntpServerString)) {
 				request->send(400, "text/plain", "Custom NTP Server is not accessible");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 
 			strlcpy(globalConfig.ntpServer, ntpServerString, sizeof(globalConfig.ntpServer));
@@ -664,7 +787,8 @@ void setupWebServer() {
 				shouldSaveConfig = true;
 			} else {
 				request->send(400, "text/plain", "Disable NTP configuration is invalid");
-				restart();
+				shouldRestart = true;
+				return;
 			}
 		}
 
@@ -685,7 +809,7 @@ void setupWebServer() {
 			extern void saveAppConfig();
 			saveAppConfig();
 #endif
-			restart();
+			shouldRestart = true;
 		}
 	});
 	// #endif
@@ -694,8 +818,6 @@ void setupWebServer() {
 	DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
 	DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
-	// For Server-Sent Events (used for upload progress on the SD card file browser)
-	server.addHandler(&sseHandler);
 	server.begin();
 }
 

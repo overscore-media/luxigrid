@@ -139,6 +139,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	if (1000 / default_fps + last_frame < millis()) {
 		fill_palette(colors, SNAKE_LENGTH, initialHue++, 5, currentPalette, 255, LINEARBLEND);
 

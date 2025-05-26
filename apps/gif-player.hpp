@@ -44,13 +44,18 @@ struct GifPlayerConfig {
 
 GifPlayerConfig gifPlayerConfig;
 
+// Utility function used so gif.hpp (imported below) doesn't need to know what GifPlayerConfig is
+unsigned long getMaxGifDuration() {
+	return gifPlayerConfig.maxGifDuration;
+}
+
 #include "../lib/gif.hpp"
 
 const char *gifPlayerConfigFilename = "/config/apps/gif_player.json";
 
 bool importGifPlayerConfig(const JsonDocument &jsonDoc) {
 	// Return false if the GIF player config doesn't have a valid maxGifDuration or gifDelay
-	if (!jsonDoc.containsKey("maxGifDuration") || !jsonDoc["maxGifDuration"].is<unsigned long>() || !jsonDoc.containsKey("gifDelay") || !jsonDoc["gifDelay"].is<unsigned long>()) {
+	if (!jsonDoc["maxGifDuration"].is<unsigned long>() || !jsonDoc["gifDelay"].is<unsigned long>()) {
 		return false;
 	}
 
@@ -149,7 +154,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(maxGifDuration->value())) {
 			request->send(400, "text/plain", "Max GIF Duration configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		unsigned long maxGifDurationToInt = strtoul(maxGifDuration->value().c_str(), nullptr, 10);
@@ -161,7 +167,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "Max GIF Duration configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 
@@ -170,7 +177,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(gifDelay->value())) {
 			request->send(400, "text/plain", "GIF Delay configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		unsigned long gifDelayToInt = strtoul(gifDelay->value().c_str(), nullptr, 10);
@@ -182,7 +190,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "GIF Delay configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 }
@@ -311,6 +320,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	// Iterate over a vector using a range-based for loop
 	for (auto &elem : GifFiles) {
 		gifPlay(elem.c_str());

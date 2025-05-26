@@ -97,7 +97,7 @@ bool rateLimitReached = false;
 
 bool importStockTickerConfig(const JsonDocument &jsonDoc) {
 	// If the refreshInterval, apiToken, or stocks properties are invalid
-	if (!jsonDoc.containsKey("refreshInterval") || !jsonDoc["refreshInterval"].is<unsigned long>() || !jsonDoc.containsKey("apiToken") || !jsonDoc["apiToken"].is<const char *>() || strlen(jsonDoc["apiToken"]) >= sizeof(stockTickerConfig.apiToken) || !jsonDoc.containsKey("stocks") || !jsonDoc["stocks"].is<JsonArrayConst>() || !jsonDoc.containsKey("stockDuration") || !jsonDoc["stockDuration"].is<unsigned long>()) {
+	if (!jsonDoc["refreshInterval"].is<unsigned long>() || !jsonDoc["apiToken"].is<const char *>() || strlen(jsonDoc["apiToken"]) >= sizeof(stockTickerConfig.apiToken) || !jsonDoc["stocks"].is<JsonArrayConst>() || !jsonDoc["stockDuration"].is<unsigned long>()) {
 		return false;
 	}
 
@@ -123,14 +123,14 @@ bool importStockTickerConfig(const JsonDocument &jsonDoc) {
 		}
 
 		// Return false if the ticker, companyName, and brandColour are invalid
-		if (!stock.containsKey("ticker") || !stock["ticker"].is<const char *>() || strlen(stock["ticker"]) >= sizeof(stockTickerConfig.stocks[0].ticker) || !stock.containsKey("companyName") || !stock["companyName"].is<const char *>() || strlen(stock["companyName"]) >= sizeof(stockTickerConfig.stocks[0].companyName) || !stock.containsKey("brandColour") || !stock["brandColour"].is<JsonObjectConst>()) {
+		if (!stock["ticker"].is<const char *>() || strlen(stock["ticker"]) >= sizeof(stockTickerConfig.stocks[0].ticker) || !stock["companyName"].is<const char *>() || strlen(stock["companyName"]) >= sizeof(stockTickerConfig.stocks[0].companyName) || !stock["brandColour"].is<JsonObjectConst>()) {
 			return false;
 		}
 
 		JsonObjectConst brandColour = stock["brandColour"].as<JsonObjectConst>();
 
 		// Return false if the brandColour format is invalid
-		if (!brandColour.containsKey("r") || !brandColour["r"].is<uint8_t>() || !brandColour.containsKey("g") || !brandColour["g"].is<uint8_t>() || !brandColour.containsKey("b") || !brandColour["b"].is<uint8_t>()) {
+		if (!brandColour["r"].is<uint8_t>() || !brandColour["g"].is<uint8_t>() || !brandColour["b"].is<uint8_t>()) {
 			return false;
 		}
 
@@ -269,7 +269,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (strlen(apiTokenString) == 0 || strlen(apiTokenString) >= sizeof(stockTickerConfig.apiToken)) {
 			request->send(400, "text/plain", "Finnhub API Token configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		// Test Finnhub API token with a known good ticker (AAPL for Apple)
@@ -283,7 +284,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "Finnhub API Token configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		http.end();
@@ -294,7 +296,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(refreshInterval->value())) {
 			request->send(400, "text/plain", "Finnhub API Refresh Interval configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		unsigned long refreshIntervalToInt = strtoul(refreshInterval->value().c_str(), nullptr, 10);
@@ -307,7 +310,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "OpenMeteo Refresh Interval configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 
@@ -319,7 +323,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (deserializationError) {
 			request->send(400, "text/plain", "Stocks configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		uint8_t index = 0;
@@ -332,7 +337,7 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			}
 
 			// Return false if the ticker, companyName, and brandColour are invalid
-			if (!stock.containsKey("ticker") || !stock["ticker"].is<const char *>() || strlen(stock["ticker"]) >= sizeof(stockTickerConfig.stocks[0].ticker) || !stock.containsKey("companyName") || !stock["companyName"].is<const char *>() || strlen(stock["companyName"]) >= sizeof(stockTickerConfig.stocks[0].companyName) || !stock.containsKey("brandColour") || !stock["brandColour"].is<JsonObjectConst>()) {
+			if (!stock["ticker"].is<const char *>() || strlen(stock["ticker"]) >= sizeof(stockTickerConfig.stocks[0].ticker) || !stock["companyName"].is<const char *>() || strlen(stock["companyName"]) >= sizeof(stockTickerConfig.stocks[0].companyName) || !stock["brandColour"].is<JsonObjectConst>()) {
 				stocksAreValid = false;
 				break;
 			}
@@ -340,7 +345,7 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			JsonObjectConst brandColour = stock["brandColour"].as<JsonObjectConst>();
 
 			// Return false if the brandColour format is invalid
-			if (!brandColour.containsKey("r") || !brandColour["r"].is<uint8_t>() || !brandColour.containsKey("g") || !brandColour["g"].is<uint8_t>() || !brandColour.containsKey("b") || !brandColour["b"].is<uint8_t>()) {
+			if (!brandColour["r"].is<uint8_t>() || !brandColour["g"].is<uint8_t>() || !brandColour["b"].is<uint8_t>()) {
 				stocksAreValid = false;
 				break;
 			}
@@ -360,7 +365,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "Stocks configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 
@@ -369,7 +375,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 
 		if (!stringIsNumeric(stockDuration->value())) {
 			request->send(400, "text/plain", "Stock Delay configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 
 		unsigned long stockDurationToInt = strtoul(stockDuration->value().c_str(), nullptr, 10);
@@ -382,7 +389,8 @@ void validateAppConfig(AsyncWebServerRequest *request, bool &shouldSaveConfig) {
 			shouldSaveConfig = true;
 		} else {
 			request->send(400, "text/plain", "Stock Delay configuration is invalid");
-			restart();
+			shouldRestart = true;
+			return;
 		}
 	}
 }
@@ -535,6 +543,11 @@ void printStockInfo(StockInfo currentStockInfo) {
 	dma_display->setCursor(0, 27);
 	printCenteredText("$" + String(currentStockInfo.price.currentPrice));
 
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	delay(stockTickerConfig.stockDuration);
 
 	if (stockTickerConfig.numberOfStocks != 1) {
@@ -652,6 +665,11 @@ int offlineX = 64;
 const char *offlineMessage = "THIS APP REQUIRES AN INTERNET CONNECTION. SELECT A WIFI NETWORK FROM THE WEB INTERFACE. YOUR IP ADDRESS IS ABOVE.";
 
 void playOfflineAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&Org_01);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -681,6 +699,11 @@ void playOfflineAnimation() {
 const char *unsetTokenMessage = "PLEASE ENTER A VALID FINNHUB API TOKEN FROM THE WEB INTERFACE. YOUR IP ADDRESS IS ABOVE.";
 
 void playUnsetTokenAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -710,6 +733,11 @@ void playUnsetTokenAnimation() {
 const char *invalidTokenMessage = "THE FINNHUB API TOKEN IS NOT VALID. PLEASE ENTER A VALID TOKEN FROM THE WEB INTERFACE. YOUR IP ADDRESS IS ABOVE.";
 
 void playInvalidTokenAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -739,6 +767,11 @@ void playInvalidTokenAnimation() {
 const char *stocksMessage = "THE STOCK TICKER CONFIG IS NOT VALID. PLEASE ENTER CORRECT STOCK SYMBOLS FROM THE WEB INTERFACE. YOUR IP ADDRESS IS ABOVE.";
 
 void playStocksAreInvalidAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -768,6 +801,11 @@ void playStocksAreInvalidAnimation() {
 const char *rateLimitMessage = "YOU HAVE REACHED THE RATE LIMIT OF THE FINNHUB API. TRY INCREASING THE API REFRESH INTERVAL FROM THE WEB INTERFACE. VISIT HTTPS://FINNHUB.IO FOR MORE INFORMATION. YOUR IP ADDRESS IS ABOVE.";
 
 void playRateLimitReachedAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -797,6 +835,11 @@ void playRateLimitReachedAnimation() {
 const char *connectionIssuesMessage = "UNABLE TO CONNECT TO THE FINNHUB API. YOUR LUXIGRID WILL ATTEMPT TO RECONNECT PERIODICALLY. IF THIS ISSUE PERSISTS, CHECK YOUR INTERNET CONNECTION. YOUR IP ADDRESS IS ABOVE.";
 
 void playConnectionIssuesAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -826,6 +869,11 @@ void playConnectionIssuesAnimation() {
 const char *noStocksMessage = "NO STOCKS FOUND. PLEASE SET ONE OR MORE STOCKS TO TRACK FROM THE WEB INTERFACE. YOUR IP ADDRESS IS ABOVE.";
 
 void playNoStocksAnimation() {
+	// If an OTA update is in progress, return from this function
+	if (otaUpdateInProgress) {
+		return;
+	}
+
 	dma_display->setFont(&TomThumb);
 	dma_display->setTextWrap(false);
 	dma_display->setCursor(12, 7);
@@ -890,6 +938,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	unsigned long currentTime = millis();
 
 	if (!wifiConfig.isAccessPoint && tokenIsValid && !noStocks && stocksAreValid && !rateLimitReached && (previousTime == 0 || (currentTime - previousTime >= stockTickerConfig.refreshInterval && stockTickerConfig.refreshInterval >= 60000))) {
@@ -925,6 +979,11 @@ void loop() {
 		playRateLimitReachedAnimation();
 	} else if (isOnline) {
 		for (uint8_t x = 0; x < stockTickerConfig.numberOfStocks; x++) {
+			// If an OTA update is in progress, break out of the loop
+			if (otaUpdateInProgress) {
+				break;
+			}
+
 			printStockInfo(stockTickerConfig.stocks[x]);
 		}
 	} else {

@@ -64,6 +64,12 @@ void setup() {
 // MAIN LOOP
 ///////////////////
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	if (1000 / default_fps + last_frame < millis()) {
 		for (uint16_t x = 0; x < MATRIX_WIDTH; x++) {
 			for (uint16_t y = 0; y < MATRIX_HEIGHT; y++) {

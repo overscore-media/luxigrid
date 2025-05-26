@@ -44,11 +44,7 @@
 #include "../../lib/animation-helpers.hpp"
 
 const uint8_t borderWidth = 2;
-
-// XY needs to be defined or the blur2d call below won't work
-uint16_t XY(uint8_t x, uint8_t y) {
-	return XY16(x, y);
-}
+XYMap xyMap(MATRIX_WIDTH, MATRIX_HEIGHT, true);
 
 void setup() {
 	setupMatrix();
@@ -61,10 +57,16 @@ void setup() {
 }
 
 void loop() {
+	// If an OTA update is in progress, skip this iteration of the loop
+	if (otaUpdateInProgress) {
+		vTaskDelay(10 / portTICK_PERIOD_MS);
+		return;
+	}
+
 	if (1000 / default_fps + last_frame < millis()) {
 		uint8_t blurAmount = beatsin8(2, 10, 255);
 
-		blur2d(leds, MATRIX_WIDTH > 255 ? 255 : MATRIX_WIDTH, MATRIX_HEIGHT > 255 ? 255 : MATRIX_HEIGHT, blurAmount);
+		blur2d(leds, MATRIX_WIDTH > 255 ? 255 : MATRIX_WIDTH, MATRIX_HEIGHT > 255 ? 255 : MATRIX_HEIGHT, blurAmount, xyMap);
 
 		// Use two out-of-sync sine waves
 		uint8_t i = beatsin8(256 / MATRIX_HEIGHT, borderWidth, MATRIX_WIDTH - borderWidth);

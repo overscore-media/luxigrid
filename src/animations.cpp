@@ -229,18 +229,62 @@ void showWiFiInformation(String ssid, String ipAddressString) {
 	for (int j = 0; j < pulseTimes; j++) {
 		// Fade in
 		for (int i = 0; i <= maxBrightness; i += pulseSpeed) {
+			// If an OTA update is in progress, stop this animation
+			if (otaUpdateInProgress) {
+				vTaskDelay(10 / portTICK_PERIOD_MS);
+				break;
+			}
+
 			dma_display->drawRect(0, 0, 64, 32, dma_display->color565(i, i, i));  // Draw rectangle with increasing brightness
 			delay(10);                                                            // Short delay to see the animation
 		}
 
 		// Fade out
 		for (int i = maxBrightness; i >= 0; i -= pulseSpeed) {
+			// If an OTA update is in progress, stop this animation
+			if (otaUpdateInProgress) {
+				vTaskDelay(10 / portTICK_PERIOD_MS);
+				break;
+			}
+
 			dma_display->drawRect(0, 0, 64, 32, dma_display->color565(i, i, i));  // Draw rectangle with decreasing brightness
 			delay(10);                                                            // Short delay to see the animation
 		}
 	}
 
 	dma_display->clearScreen();
+}
+
+// Gets a colour somewhere between pink and green, for a progress between 0 and 100
+uint16_t getOTALoadingAnimationProgressColour() {
+	uint8_t value = (otaUpdatePercentComplete > 100) ? 100 : otaUpdatePercentComplete;
+
+	// Pink: RGB(255, 100, 175)
+	uint8_t startR = 255, startG = 100, startB = 175;
+	// Green: RGB(0, 255, 0)
+	uint8_t endR = 0, endG = 255, endB = 0;
+
+	uint8_t r = startR + ((endR - startR) * value) / 100;
+	uint8_t g = startG + ((endG - startG) * value) / 100;
+	uint8_t b = startB + ((endB - startB) * value) / 100;
+
+	return dma_display->color565(r, g, b);
+}
+
+// Play the animation shown while an OTA update is in progress
+void playOTALoadingAnimation() {
+	dma_display->setTextColor(dma_display->color565(255, 255, 255));
+	dma_display->setFont(&Org_01);
+	printCenteredText("UPDATING...", true);
+
+	// Black rectangle behind the text (alternative to clearing the whole screen)
+	dma_display->fillRect(23, 22, 17, 5, dma_display->color565(0, 0, 0));
+	// Display the upload progress
+	dma_display->setCursor(dma_display->getCursorX(), 26);
+	dma_display->setTextColor(getOTALoadingAnimationProgressColour());
+	printCenteredText(String(otaUpdatePercentComplete) + "%");
+
+	vTaskDelay(250 / portTICK_PERIOD_MS);
 }
 
 void crashWithErrorCode(uint16_t errorCode) {
