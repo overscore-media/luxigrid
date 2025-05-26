@@ -109,6 +109,10 @@ extern unsigned long bme680Delay;
 
 extern const uint8_t MAX_WIFI_RETRIES;
 
+extern uint8_t otaUpdatePercentComplete;
+extern bool otaUpdateInProgress;
+extern bool shouldRestart;
+
 // Whether the global, time, WiFi, and app-specific config (if applicable) has been fully loaded
 extern bool configIsLoaded;
 
